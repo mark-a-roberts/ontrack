@@ -1,0 +1,84 @@
+@import '../tfl-ui/_colors.scss';
+
+.sidebar {
+    width: 100px;
+    height: 100vh;
+    background: $transport-for-london-blue;
+    &-logo {
+        background: white;
+        color: $transport-for-london-blue;
+
+        & img {
+            width: 70px;
+            padding: 15px;
+        }
+    }
+
+    &-button {
+        width: 70px;
+        padding: 15px;
+        color: white;
+        fill: white;
+        stroke: white;
+    }
+
+    .selected {
+        background-color: $waterloo-and-city-turquoise;
+    }
+}
+
+.settings {
+    background: $accent-mid-grey;
+    color: $transport-for-london-blue;
+    text-align: left;
+    padding: 0 10px;
+    min-width: 300px;
+
+    h1 {
+        background: $corporate-white;
+        margin: 0;
+        padding: 0 10px;
+    }
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.well {
+    background: $corporate-white;
+    margin: 20px;
+    padding: 5px;
+}
+
+.filter-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter {
+    width: 100px;
+    min-height: 60px;
+    color: $corporate-blue;
+    background: $corporate-white;
+    border: none;
+    margin: 2px;
+
+    &.selected {
+        background: $corporate-green;
+        color: $corporate-white;
+    }
+}
+
+.primary {
+    color: white;
+    background: $corporate-blue;
+}
+
+.secondary {
+    color: $corporate-blue;
+    background: $primary-white;
+    border: 1px solid $corporate-blue;
+}
+
