@@ -1,14 +1,16 @@
 import React from "react";
 import {connect, ConnectedProps} from 'react-redux';
-import {areaToggle} from "../actions";
+import {areas,areaToggle} from "../actions";
 import {IArea} from "../reducers/area";
-
+import Switch from "react-switch";
 
 interface IProps {
-    areas?: string[]
+    areas: string[],
+    areaToggle: any
 }
 
 interface IState {
+    checked: boolean
 }
 
 type MyProps = PropsFromRedux & IProps;
@@ -30,18 +32,38 @@ const mapDispatch = {
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 class Settings extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(checked: any, e: any, id: string) {
+        this.props.areaToggle(id);
+    }
 
     render() {
-
+        console.log( "Settings");
+        console.log( this.props.areas);
+        // @ts-ignore
         return <div className='settings'>
             <h2>My Settings</h2>
             <div className='well'>
                 <h3>Monitoring Area</h3>
                 <p>Select your area</p>
-                <div>North</div>
-                <div>East</div>
-                <div>South</div>
-                <div>Central</div>
+                {areas.map((a) => {
+
+                    // @ts-ignore
+                    let check = (this.props.areas && (this.props.areas.indexOf(a.key) >= 0)) || false;
+                    return <div key={a.key}>
+                        <label>
+                            <span className="areaName">{a.name}</span>
+                            <Switch id={a.key} onChange={this.handleChange} checked={check} />
+                        </label>
+                    </div>
+                }
+                )
+                }
                 <button className='button primary'>Go to alerts</button>
             </div>
             <div className='well'>

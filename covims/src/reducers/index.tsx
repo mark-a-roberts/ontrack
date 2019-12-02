@@ -6,7 +6,7 @@ import { areaReducer } from "./area";
 const rootReducer = combineReducers({
     alerts: alertReducer,
     filter: filterReducer,
-    area: areaReducer
+    areas: areaReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>

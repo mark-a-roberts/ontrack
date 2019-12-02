@@ -37,11 +37,17 @@ export function filterToggle(filter: string): FilterActionTypes {
 export const AREA_ON  = 'AREA_ON';
 export const AREA_OFF  = 'AREA_OFF';
 export const AREA_TOGGLE  = 'AREA_TOGGLE';
-export const areas = [
-    { name: 'North'},
-    { name: 'East'},
-    { name: 'South'},
-    { name: 'Central'}
+
+interface IArea {
+    key: string,
+    name: string
+}
+
+export const areas: IArea[] = [
+    { key: 'north', name: 'North'},
+    { key: 'east', name: 'East'},
+    { key: 'south', name: 'South'},
+    { key: 'central', name: 'Central'}
 ];
 
 export type AREA_ACTION = typeof AREA_ON | typeof AREA_OFF | typeof AREA_TOGGLE;
