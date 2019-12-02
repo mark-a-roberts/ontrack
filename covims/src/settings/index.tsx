@@ -19,7 +19,6 @@ type MyProps = PropsFromRedux & IProps;
     Settings
  */
 const mapState = (state: any) => {
-    console.log( state);
     return {
         areas:  state.areas,
     }
@@ -43,8 +42,6 @@ class Settings extends React.Component<IProps, IState> {
     }
 
     render() {
-        console.log( "Settings");
-        console.log( this.props.areas);
         // @ts-ignore
         return <div className='settings'>
             <h2>My Settings</h2>

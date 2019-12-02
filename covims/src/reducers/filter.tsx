@@ -20,8 +20,6 @@ export function filterReducer( state:Filter = initialState, action: FilterAction
             } else {
                 newState.splice(index, 1);
             }
-            console.log( "Newstate");
-            console.log( action);
             return newState;
         case FILTER_ON:
             // @ts-ignore

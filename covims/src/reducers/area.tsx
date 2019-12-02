@@ -20,8 +20,6 @@ export function areaReducer( state:IArea = initialState, action: AreaAction): IA
             } else {
                 newState.splice(index, 1);
             }
-            console.log( "Newstate");
-            console.log( newState);
             return newState;
         case AREA_ON:
             // @ts-ignore

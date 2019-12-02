@@ -51,7 +51,6 @@ function Alert(props: AlertProps) {
     AlertList
  */
 const mapState = (state: any) => {
-    console.log( state);
     return {
         alerts: filteredAlerts( state.alerts, state.filter, state.areas),
         filter: state.filter

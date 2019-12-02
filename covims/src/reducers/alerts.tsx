@@ -1,6 +1,8 @@
+type AlertType = 'broken' | 'hazard' | 'collision' | 'closure' | 'lights' | 'traffic';
+
 export interface IAlert {
     key: string;
-    type: string;
+    type: AlertType;
     title: string;
     text: string;
     time: string;
@@ -11,7 +13,12 @@ export interface IAlert {
 const initialState: Array<IAlert> =
     [
         {key: '1', type: 'hazard', title: 'Hazard', text: 'A1: hazard', time: '', completed: false},
-        {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time: '', completed: false}
+        {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time: '', completed: false},
+        {key: '3', type: 'hazard', title: 'Hazard', text: 'A406: hazard', time: '', completed: false},
+        {key: '4', type: 'closure', title: 'Closure', text: 'A307: closure', time: '', completed: false},
+        {key: '5', type: 'lights', title: 'Traffic Light', text: 'A3205: traffic light failure', time: '', completed: false},
+        {key: '6', type: 'traffic', title: 'Traffic Slow', text: 'A3205: traffic jam', time: '', completed: false},
+        {key: '7', type: 'broken', title: 'Broken Buss', text: 'A214: bus broken down', time: '', completed: false},
     ]
 ;
 
@@ -19,6 +26,7 @@ class ActionType {
     id!: string;
     type!: string;
     payload!: {
+        type: AlertType,
         title: string;
         text: string;
         time: string;
@@ -34,7 +42,7 @@ export function alertReducer(state = initialState, action: ActionType): Array<IA
                 ...state,
                 {
                     key: action.id,
-                    type: action.type,
+                    type: action.payload.type,
                     title: action.payload.title,
                     text: action.payload.text,
                     time: action.payload.time,
