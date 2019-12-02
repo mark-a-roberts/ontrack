@@ -1,4 +1,4 @@
-export interface Alert {
+export interface IAlert {
     key: string;
     type: string;
     title: string;
@@ -8,7 +8,7 @@ export interface Alert {
 }
 
 
-const initialState: Array<Alert> =
+const initialState: Array<IAlert> =
     [
         {key: '1', type: 'hazard', title: 'Hazard', text: 'A1: hazard', time: '', completed: false},
         {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time: '', completed: false}
@@ -26,7 +26,7 @@ class ActionType {
     completed!: boolean;
 }
 
-export function alertReducer(state = initialState, action: ActionType): Array<Alert> {
+export function alertReducer(state = initialState, action: ActionType): Array<IAlert> {
     // When the app loads this would check for the state, which is undefined, so set it to null in the argument.
     switch (action.type) {
         case 'ADD':

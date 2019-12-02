@@ -2,28 +2,45 @@ import React from 'react';
 import logo from '../tfl-ui/logo.svg';
 import bell from '../tfl-ui/bell';
 import settings from '../tfl-ui/settings';
-import Alert from '../alert';
+import  Alert from '../alert';
+import {IAlert} from '../reducers/alerts'
+import {filterToggle} from "../actions";
 import './sidebar.scss';
 
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 
+
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface IProps {
     alerts?:  object[]
+    filter: string[]
+    filterToggle: any
 }
 
-interface IFilter {
-    closure: boolean;
-    hazard: boolean;
-    traffic: boolean;
-    lights: boolean;
-    broken: boolean
-    collision: boolean;
+type MyProps = PropsFromRedux & IProps;
+
+const filteredAlerts = (alerts: IAlert[], filters: string[]) => {
+    return filters.length ?
+        alerts.filter( (a: IAlert) => (filters.indexOf(a.type) >= 0)) :
+        alerts;
 }
+
+const mapState = (state: any) => {
+    console.log( state);
+    return {
+        alerts: filteredAlerts( state.alerts, state.filter),
+        filter: state.filter
+    }
+};
+
+const mapDispatch = {
+    filterToggle: (index:string) => (filterToggle(index))
+}
+
 
 interface IState {
     mode?: string;
-    filter: IFilter
 }
 
 
@@ -32,22 +49,15 @@ class Sidebar extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             mode: 'alert',
-            filter: {
-                closure: false,
-                hazard: false,
-                traffic: false,
-                lights: false,
-                broken: false,
-                collision: false
-            }
         };
     };
 
     FilterButton(id: string, text: string) {
+        let selected = this.props.filter.indexOf( id);
         // @ts-ignore
-        return <button className={'filter' + (this.state.filter[id] ? ' selected' : '')}
+        return <button className={'filter' + ((selected >= 0) ? ' selected' : '')}
                        id={id}
-                       onClick={() => this.toggle(id)}
+                       onClick={() => this.props.filterToggle(id)}
         >{text}
         </button>
     }
@@ -58,14 +68,6 @@ class Sidebar extends React.Component<IProps, IState> {
 
     settingMode = (e: React.MouseEvent) => {
         this.setState({mode: 'setting'})
-    };
-
-    toggle = (index: string) => {
-        let filter: IFilter = {...this.state.filter};
-        // @ts-ignore
-        filter[index] = !filter[index];
-        console.log('filter toggle:' + index);
-        this.setState({filter});
     };
 
     render() {
@@ -100,12 +102,12 @@ class Sidebar extends React.Component<IProps, IState> {
                         <div>East</div>
                         <div>South</div>
                         <div>Central</div>
-                        <button className='primary'>Go to alerts</button>
+                        <button className='button primary'>Go to alerts</button>
                     </div>
                     <div className='well'>
                         <h3>Log Out</h3>
                         <p>Click the button below to log out of COV IMS</p>
-                        <button className='secondary'>Log Out</button>
+                        <button className='button secondary'>Log Out</button>
                     </div>
                 </div>
                 }
@@ -137,14 +139,7 @@ class Sidebar extends React.Component<IProps, IState> {
     }
 }
 
-const mapState = (state: any) => {
-    console.log( state);
-    return {
-        alerts: state.alerts,
-        filter: state.filter
-    }
-};
+const connector = connect(mapState, mapDispatch)(Sidebar);
 
-const ConnectedBar = connect(mapState)(Sidebar);
 
-export default ConnectedBar;
+export default connector;
