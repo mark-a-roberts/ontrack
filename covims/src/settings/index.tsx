@@ -1,7 +1,6 @@
 import React from "react";
-import {connect, ConnectedProps} from 'react-redux';
-import {areas,areaToggle} from "../actions";
-import {IArea} from "../reducers/area";
+import {connect} from 'react-redux';
+import {areas, areaToggle} from "../actions";
 import Switch from "react-switch";
 
 interface IProps {
@@ -13,7 +12,6 @@ interface IState {
     checked: boolean
 }
 
-type MyProps = PropsFromRedux & IProps;
 
 /*
     Settings
@@ -27,8 +25,6 @@ const mapState = (state: any) => {
 const mapDispatch = {
     areaToggle: (index:string) => (areaToggle(index))
 };
-
-type PropsFromRedux = ConnectedProps<typeof connector>
 
 class Settings extends React.Component<IProps, IState> {
     constructor(props: IProps) {
