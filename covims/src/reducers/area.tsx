@@ -1,16 +1,16 @@
-import { FILTER_OFF, FILTER_ON, FILTER_TOGGLE, FilterActionTypes} from "../actions";
+import { AREA_OFF, AREA_ON, AREA_TOGGLE, AreaAction} from "../actions";
 
-export interface Filter {
+export interface IArea {
     [index:number] : string
 }
 
-const initialState: Filter = [];
+const initialState: IArea = [];
 
-export function filterReducer( state:Filter = initialState, action: FilterActionTypes): Filter {
+export function areaReducer( state:IArea = initialState, action: AreaAction): IArea {
     // When the app loads this would check for the state, which is undefined, so set it to null in the argument.
     let index: number, newState: Array<string>;
     switch (action.type) {
-        case FILTER_TOGGLE:
+        case AREA_TOGGLE:
             // @ts-ignore
             newState = [...state];
             index = newState.indexOf(action.payload);
@@ -23,7 +23,7 @@ export function filterReducer( state:Filter = initialState, action: FilterAction
             console.log( "Newstate");
             console.log( action);
             return newState;
-        case FILTER_ON:
+        case AREA_ON:
             // @ts-ignore
             newState = [...state];
             index = newState.indexOf(action.payload);
@@ -34,7 +34,7 @@ export function filterReducer( state:Filter = initialState, action: FilterAction
                 newState.splice(index, 1);
             }
             return newState;
-        case FILTER_OFF:
+        case AREA_OFF:
             // @ts-ignore
             newState = [...state];
             index = newState.indexOf(action.payload);
