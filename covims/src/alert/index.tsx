@@ -4,7 +4,7 @@ import {filterToggle} from "../actions";
 import {IAlert} from "../reducers/alerts";
 
 interface IProps {
-    alerts?:  object[]
+    alerts?: object[]
     filter: string[]
     filterToggle: any
 }
@@ -13,12 +13,12 @@ type MyProps = PropsFromRedux & IProps;
 
 const filteredAlerts = (alerts: IAlert[], filters: string[], areas: string[]) => {
     return filters.length ?
-        alerts.filter( (a: IAlert) => (filters.indexOf(a.type) >= 0)) :
+        alerts.filter((a: IAlert) => (filters.indexOf(a.type) >= 0)) :
         alerts;
-}
+};
 
 interface IProps {
-    alerts?:  object[]
+    alerts?: object[]
     filter: string[]
     areas?: string[]
     filterToggle: any
@@ -32,18 +32,49 @@ interface IState {
  */
 
 interface AlertProps {
-    key: string;
     title: string;
     text: string;
-    time: number
+    time: Date
 }
 
+const SEC = 1000;
+const MIN = 60 * SEC;
+const HOUR = 60 * MIN;
+
+function timeDifference(t1: Date, t2: Date): string {
+    const timeDiff = t1.getTime() - t2.getTime();
+    let ds = '';
+    if (timeDiff < HOUR) {
+        let min = Math.floor(timeDiff / MIN);
+        ds = (min !== 0) ? min + ' mins ago' : 'Now';
+    } else {
+        const today = t1.toDateString();
+        let y: Date = new Date(t1);
+        y.setDate(t1.getDate() - 1);
+        const yesterday = y.toDateString();
+        console.log( 'Today:' + today + ' Yesterday:' + yesterday);
+        if (today === t2.toDateString()) {
+            // today
+            ds = 'Today';
+        } else if (yesterday === t2.toDateString()) {
+            // yesterday
+            ds = 'Yesterday'
+        } else {
+            ds = t2.toLocaleDateString('en', { 'month': 'short', 'day': 'numeric'});
+        }
+        ds += ' at ' + t2.toLocaleTimeString('en', { 'hour': '2-digit', 'minute': '2-digit'} );
+    }
+    return ds;
+
+}
 
 function Alert(props: AlertProps) {
-    return <div key={props.key}>
+    const now = new Date();
+    return <div className='alert'>
         <h4>{props.title}</h4>
-        <p>{props.text}</p>
-        <hr />
+        <div>{props.text}</div>
+        <div className='alert-time'>{timeDifference(now, props.time)}</div>
+        <hr/>
     </div>
 }
 
@@ -52,13 +83,13 @@ function Alert(props: AlertProps) {
  */
 const mapState = (state: any) => {
     return {
-        alerts: filteredAlerts( state.alerts, state.filter, state.areas),
+        alerts: filteredAlerts(state.alerts, state.filter, state.areas),
         filter: state.filter
     }
 };
 
 const mapDispatch = {
-    filterToggle: (index:string) => (filterToggle(index))
+    filterToggle: (index: string) => (filterToggle(index))
 };
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -66,7 +97,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 class AlertList extends React.Component<IProps, IState> {
 
     FilterButton(id: string, text: string) {
-        let selected = this.props.filter.indexOf( id);
+        let selected = this.props.filter.indexOf(id);
         // @ts-ignore
         return <button className={'filter' + ((selected >= 0) ? ' selected' : '')}
                        id={id}
@@ -95,10 +126,13 @@ class AlertList extends React.Component<IProps, IState> {
                     {this.FilterButton('traffic', 'Traffic')}
                 </div>
             </div>
-            <div className='well'>
+            <div className='well alerts'>
                 <h3>{alertTitle}</h3>
                 <p>Sorted by:</p>
-                {alerts && alerts.map( (a:any) => Alert(a))}
+                <div className='alert-list'>
+                    {alerts && alerts.map((a: any) => (
+                        <Alert key={a.key} title={a.title} text={a.text} time={a.time}/>))}
+                </div>
             </div>
         </div>
     }

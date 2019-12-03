@@ -33,11 +33,30 @@
     text-align: left;
     padding: 0 10px;
     min-width: 300px;
+    max-height: 100vh;
+    overflow: hidden;
 
     h1 {
         background: $corporate-white;
         margin: 0;
         padding: 0 10px;
+    }
+}
+
+.alerts {
+    height: calc(100vh - 300px);
+    overflow: hidden;
+}
+
+.alert-list {
+    max-height: 96%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.alert {
+    &-time {
+        text-align:right;
     }
 }
 
