@@ -46,7 +46,11 @@ function timeDifference(t1: Date, t2: Date): string {
     let ds = '';
     if (timeDiff < HOUR) {
         let min = Math.floor(timeDiff / MIN);
-        ds = (min !== 0) ? min + ' mins ago' : 'Now';
+        if (min !== 0) {
+            ds = min + ' mins ago';
+        } else {
+            ds = Math.floor(timeDiff / SEC) + ' secs ago';
+        }
     } else {
         const today = t1.toDateString();
         let y: Date = new Date(t1);
@@ -62,7 +66,7 @@ function timeDifference(t1: Date, t2: Date): string {
         } else {
             ds = t2.toLocaleDateString('en', { 'month': 'short', 'day': 'numeric'});
         }
-        ds += ' at ' + t2.toLocaleTimeString('en', { 'hour': '2-digit', 'minute': '2-digit'} );
+        ds += ' ' + t2.toLocaleTimeString('en', { 'hour12': false, 'hour': '2-digit', 'minute': '2-digit'} );
     }
     return ds;
 
@@ -70,10 +74,19 @@ function timeDifference(t1: Date, t2: Date): string {
 
 function Alert(props: AlertProps) {
     const now = new Date();
-    return <div className='alert'>
-        <h4>{props.title}</h4>
-        <div>{props.text}</div>
-        <div className='alert-time'>{timeDifference(now, props.time)}</div>
+    return <div>
+        <div className='alert'>
+            <div className='alert-type'>
+                New
+            </div>
+            <div className='alert-info'>
+                <h4>{props.title}</h4>
+                <p>{props.text}</p>
+            </div>
+            <div className='alert-time'>
+                {timeDifference(now, props.time)}
+            </div>
+        </div>
         <hr/>
     </div>
 }
@@ -84,7 +97,8 @@ function Alert(props: AlertProps) {
 const mapState = (state: any) => {
     return {
         alerts: filteredAlerts(state.alerts, state.filter, state.areas),
-        filter: state.filter
+        filter: state.filter,
+        sort: state.sort
     }
 };
 
