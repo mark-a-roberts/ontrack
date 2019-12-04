@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import {connect, ConnectedProps} from 'react-redux';
 import {filterToggle} from "../actions";
-import {IAlert} from "../reducers/alerts";
+import {filteredAlerts} from "../reducers/alerts";
 import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome'
 import {
     faCarCrash, faCarSide, faTruckPickup, faTimesCircle, faTrafficLight, faSmog
@@ -18,12 +18,6 @@ interface IProps {
 
 type MyProps = PropsFromRedux & IProps;
 
-const filteredAlerts = (alerts: IAlert[], filters: string[], areas: string[]) => {
-    let sorted = alerts.slice().sort((a: any, b: any) => (b.time - a.time));
-    return filters.length ?
-        sorted.filter((a: IAlert) => (filters.indexOf(a.type) >= 0)) :
-        sorted;
-};
 
 interface IProps {
     alerts?: object[]

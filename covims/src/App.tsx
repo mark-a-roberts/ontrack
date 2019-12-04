@@ -1,9 +1,12 @@
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
 import Sidebar from './sidebar';
 import './App.css';
+import Map from './map'
+import {connect} from "react-redux";
+import {filteredAlerts} from "./reducers/alerts";
 
-const App: React.FC = () => {
+
+const App: React.FC = (props:any) => {
     let defaultProps = {
         center: {
             lat: 51.5,
@@ -15,15 +18,23 @@ const App: React.FC = () => {
     <div className="App">
       <Sidebar />
         <div style={{ height: '100vh', width: '100%' }}>
-            <GoogleMapReact
-                bootstrapURLKeys={{ key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I' }}
-                defaultCenter={defaultProps.center}
-                defaultZoom={defaultProps.zoom}
-            >
-            </GoogleMapReact>
+            <Map alerts={props.alerts} {...defaultProps}/>
         </div>
     </div>
   );
 };
 
-export default App;
+/*
+    AlertList
+ */
+const mapState = (state: any) => {
+    return {
+        alerts: filteredAlerts(state.alerts, state.filter, state.areas),
+        filter: state.filter,
+        sort: state.sort
+    }
+};
+
+const connector = connect(mapState)(App);
+
+export default connector;

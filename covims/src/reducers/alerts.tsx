@@ -6,6 +6,8 @@ export interface IAlert {
     title: string;
     text: string;
     time: Date;
+    lat?: number;
+    lng?:number;
     completed: boolean;
 }
 
@@ -15,13 +17,27 @@ function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
 
 const initialState: Array<IAlert> =
     [
-        {key: '1', type: 'hazard', title: 'Hazard', text: 'A1: hazard', time:  testDate(), completed: false},
-        {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time:  testDate(), completed: false},
-        {key: '3', type: 'hazard', title: 'Hazard', text: 'A406: hazard', time: testDate(), completed: false},
-        {key: '4', type: 'closure', title: 'Closure', text: 'A307: closure', time:  testDate(), completed: false},
-        {key: '5', type: 'lights', title: 'Traffic Light', text: 'A3205: traffic light failure', time:  testDate(), completed: false},
-        {key: '6', type: 'traffic', title: 'Traffic Slow', text: 'A3205: traffic jam', time:  testDate(), completed: false},
-        {key: '7', type: 'broken', title: 'Broken Bus', text: 'A214: bus broken down', time:  testDate(), completed: false},
+        {key: '1', type: 'hazard', title: 'Hazard', text: 'A1: hazard', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.1
+        },
+        {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.11
+        },
+        {key: '3', type: 'hazard', title: 'Hazard', text: 'A406: hazard', time: testDate(), completed: false,
+            lat: 51.5, lng: -0.12
+        },
+        {key: '4', type: 'closure', title: 'Closure', text: 'A307: closure', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.13
+        },
+        {key: '5', type: 'lights', title: 'Traffic Light', text: 'A3205: traffic light failure', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.14
+        },
+        {key: '6', type: 'traffic', title: 'Traffic Slow', text: 'A3205: traffic jam', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.15
+        },
+        {key: '7', type: 'broken', title: 'Broken Bus', text: 'A214: bus broken down', time:  testDate(), completed: false,
+            lat: 51.5, lng: -0.16
+        },
     ]
 ;
 
@@ -59,3 +75,10 @@ export function alertReducer(state = initialState, action: ActionType): Array<IA
             return state;
     }
 }
+
+export const filteredAlerts = (alerts: IAlert[], filters: string[], areas: string[]) => {
+    let sorted = alerts.slice().sort((a: any, b: any) => (b.time - a.time));
+    return filters.length ?
+        sorted.filter((a: IAlert) => (filters.indexOf(a.type) >= 0)) :
+        sorted;
+};
