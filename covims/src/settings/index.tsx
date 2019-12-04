@@ -41,7 +41,7 @@ class Settings extends React.Component<IProps, IState> {
         // @ts-ignore
         return <div className='settings'>
             <h2>My Settings</h2>
-            <div className='well'>
+            <div className='well white'>
                 <h3>Monitoring Area</h3>
                 <p>Select your area</p>
                 {areas.map((a) => {
@@ -59,7 +59,7 @@ class Settings extends React.Component<IProps, IState> {
                 }
                 <button className='button primary'>Go to alerts</button>
             </div>
-            <div className='well'>
+            <div className='well white'>
                 <h3>Log Out</h3>
                 <p>Click the button below to log out of COV IMS</p>
                 <button className='button secondary'>Log Out</button>
