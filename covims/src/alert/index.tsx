@@ -178,7 +178,7 @@ class AlertList extends React.Component<IProps, IState> {
                 </p>
                 <div className='alert-list'>
                     {alerts && alerts.map((a: any) => (
-                        <Alert key={a.key} title={a.title} text={a.text} time={a.time}/>))}
+                        <Alert key={a.id} title={a.title} text={a.text} time={a.time}/>))}
                 </div>
             </div>
         </div>

@@ -1,8 +1,9 @@
 type AlertType = 'broken' | 'hazard' | 'collision' | 'closure' | 'lights' | 'traffic';
 
 export interface IAlert {
-    key: string;
+    id: string;
     type: AlertType;
+    area: string;
     title: string;
     text: string;
     time: Date;
@@ -15,41 +16,38 @@ function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
-const initialState: Array<IAlert> =
-    [
-        {key: '1', type: 'hazard', title: 'Hazard', text: 'A1: hazard', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.1
-        },
-        {key: '2', type: 'collision', title: 'Collision', text: 'A34: collision', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.11
-        },
-        {key: '3', type: 'hazard', title: 'Hazard', text: 'A406: hazard', time: testDate(), completed: false,
-            lat: 51.5, lng: -0.12
-        },
-        {key: '4', type: 'closure', title: 'Closure', text: 'A307: closure', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.13
-        },
-        {key: '5', type: 'lights', title: 'Traffic Light', text: 'A3205: traffic light failure', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.14
-        },
-        {key: '6', type: 'traffic', title: 'Traffic Slow', text: 'A3205: traffic jam', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.15
-        },
-        {key: '7', type: 'broken', title: 'Broken Bus', text: 'A214: bus broken down', time:  testDate(), completed: false,
-            lat: 51.5, lng: -0.16
-        },
-    ]
-;
+const alertTypes: AlertType[] = [
+    'broken' , 'hazard' , 'collision' , 'closure' , 'lights' , 'traffic'
+];
+
+const mockAlert = () : IAlert => {
+    const type:AlertType = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+    let position = {
+        lat: 51.25 + Math.random()*0.5,
+        lng: -0.25 + Math.random()*0.5,
+    };
+
+    let area = (position.lat < 51.5) ? 'south' :
+        ((position.lng > 0.10) ? 'east'  : ((position.lng < -0.10) ? 'west' : 'central'));
+    return  {
+        id: '' + Math.floor(Math.random() * 1000000),
+        type,
+        area,
+        title: type,
+        text: 'some text',
+        time: testDate(),
+        ...position,
+        completed: false
+    }
+}
+
+
+const initialState: Array<IAlert> = Array.from( { length:1000}, () => mockAlert());
 
 class ActionType {
     id!: string;
     type!: string;
-    payload!: {
-        type: AlertType,
-        title: string;
-        text: string;
-        time:  Date;
-    };
+    payload!: IAlert;
     completed!: boolean;
 }
 
@@ -60,16 +58,11 @@ export function alertReducer(state = initialState, action: ActionType): Array<IA
             return [
                 ...state,
                 {
-                    key: action.id,
-                    type: action.payload.type,
-                    title: action.payload.title,
-                    text: action.payload.text,
-                    time: action.payload.time,
-                    completed: action.completed
+                    ...action.payload
                 }];
         case 'DELETE':
             return state.filter(
-                    alert => alert.key !== action.id
+                    alert => alert.id !== action.payload.id
             );
         default:
             return state;

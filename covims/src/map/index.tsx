@@ -20,7 +20,7 @@ function Map(props:any) {
         defaultZoom={props.zoom}
     >
         {props.alerts && props.alerts.map((a:IAlert) => (
-            <Marker lat={a.lat} lng={a.lng} name={a.title} color={colors[a.type] || 'orange'} />
+            <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={colors[a.type] || 'orange'} />
         ))}
     </GoogleMapReact>
 }
