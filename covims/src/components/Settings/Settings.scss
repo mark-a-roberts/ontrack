@@ -1,0 +1,17 @@
+@import '../../tfl-ui/_colors.scss';
+
+.settings {
+  background: $ims-panel-grey;
+  color: $ims-blueberry;
+  text-align: left;
+  padding: 0 5px;
+  min-width: 300px;
+  max-height: 100vh;
+  overflow: hidden;
+
+  h1 {
+    background: $ims-white;
+    margin: 0;
+    padding: 0 10px;
+  }
+}

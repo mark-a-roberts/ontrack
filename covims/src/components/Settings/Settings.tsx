@@ -1,7 +1,9 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {areas, areaToggle} from "../actions";
+import {areas, areaToggle} from "../../actions";
 import Switch from "react-switch";
+
+import './Settings.scss';
 
 interface IProps {
     areas: string[],
@@ -46,15 +48,15 @@ class Settings extends React.Component<IProps, IState> {
                 <p>Select your area</p>
                 {areas.map((a) => {
 
-                    // @ts-ignore
-                    let check = (this.props.areas && (this.props.areas.indexOf(a.key) >= 0)) || false;
-                    return <div key={a.key}>
-                        <label>
-                            <span className="areaName">{a.name}</span>
-                            <Switch id={a.key} onChange={this.handleChange} checked={check} />
-                        </label>
-                    </div>
-                }
+                        // @ts-ignore
+                        let check = (this.props.areas && (this.props.areas.indexOf(a.key) >= 0)) || false;
+                        return <div key={a.key}>
+                            <label>
+                                <span className="areaName">{a.name}</span>
+                                <Switch id={a.key} onChange={this.handleChange} checked={check} />
+                            </label>
+                        </div>
+                    }
                 )
                 }
                 <button className='button primary'>Go to alerts</button>
@@ -71,5 +73,3 @@ class Settings extends React.Component<IProps, IState> {
 const connector = connect(mapState, mapDispatch)(Settings);
 
 export default connector;
-
-

@@ -1,12 +1,13 @@
 import React from 'react';
-import Sidebar from './sidebar';
-import './App.css';
-import Map from './map'
+import {BrowserRouter as Router} from "react-router-dom";
+import SideNav from './components/SideNav';
+import Map from './components/Map';
 import {connect} from "react-redux";
 import {filteredAlerts} from "./reducers/alerts";
 
+import './App.css';
 
-const App: React.FC = (props:any) => {
+const App: React.FC = (props: any) => {
     let defaultProps = {
         center: {
             lat: 51.5,
@@ -14,14 +15,16 @@ const App: React.FC = (props:any) => {
         },
         zoom: 11
     };
-  return (
-    <div className="App">
-      <Sidebar />
-        <div style={{ height: '100vh', width: '100%' }}>
-            <Map alerts={props.alerts} {...defaultProps}/>
-        </div>
-    </div>
-  );
+    return (
+        <Router>
+            <div className='App'>
+                <SideNav/>
+                <div style={{height: '100vh', width: '100%'}}>
+                    <Map alerts={props.alerts} {...defaultProps}/>
+                </div>
+            </div>
+        </Router>
+    );
 };
 
 /*

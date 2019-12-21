@@ -2,7 +2,7 @@ import './mark';
 import GoogleMapReact from "google-map-react";
 import Marker from "./mark";
 import React from "react";
-import {IAlert} from "../reducers/alerts";
+import {IAlert} from "../../reducers/alerts";
 
 const colors:any = {
     broken: 'turquoise',

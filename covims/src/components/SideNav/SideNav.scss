@@ -1,0 +1,90 @@
+@import '../../tfl-ui/_colors.scss';
+
+.sidenav {
+    width: 109px;
+    height: 100vh;
+    background: $ims-blueberry;
+    box-shadow: 4px 0 10px 0 rgba(53, 58, 140, 0.3);
+    &-logo {
+        background: white;
+        color: $ims-blueberry;
+
+        & img {
+            width: 70px;
+            padding: 15px;
+        }
+    }
+
+    &-button {
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 109px;
+        padding: 25px;
+        color: $ims-white;
+        fill: $ims-white;
+        stroke: $ims-white;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+    }
+
+    .selected {
+        background-color: $ims-seafoam-blue;
+    }
+}
+
+
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.well {
+    margin: 5px;
+    padding: 5px;
+}
+
+.filter-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter {
+    width: 100px;
+    min-height: 60px;
+    color: $corporate-blue;
+    background: $corporate-white;
+    border: none;
+    margin: 2px;
+
+    &.selected {
+        background: $corporate-green;
+        color: $corporate-white;
+    }
+}
+
+.button {
+    padding: 10px;
+}
+
+.primary {
+    color: white;
+    background: $corporate-blue;
+}
+
+.secondary {
+    color: $corporate-blue;
+    background: $primary-white;
+    border: 1px solid $corporate-blue;
+}
+
+.areaName {
+    display: inline-block;
+    width: 150px;
+}
+
+.white {
+    background: $corporate-white;
+}
+
