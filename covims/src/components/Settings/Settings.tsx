@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {areas, areaToggle} from "../../actions";
 import Switch from "react-switch";
 
+import SidePanel from "../SidePanel";
+
 import './Settings.scss';
 
 interface IProps {
@@ -41,7 +43,7 @@ class Settings extends React.Component<IProps, IState> {
 
     render() {
         // @ts-ignore
-        return <div className='settings'>
+        return <SidePanel className='settings'>
             <h2>My Settings</h2>
             <div className='well white'>
                 <h3>Monitoring Area</h3>
@@ -66,7 +68,7 @@ class Settings extends React.Component<IProps, IState> {
                 <p>Click the button below to log out of COV IMS</p>
                 <button className='button secondary'>Log Out</button>
             </div>
-        </div>
+        </SidePanel>
     }
 }
 

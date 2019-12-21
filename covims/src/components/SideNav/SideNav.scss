@@ -1,6 +1,7 @@
 @import '../../tfl-ui/_colors.scss';
 
 .sidenav {
+    z-index: 100;
     width: 109px;
     height: 100vh;
     background: $ims-blueberry;
@@ -51,16 +52,20 @@
 }
 
 .filter {
-    width: 100px;
-    min-height: 60px;
-    color: $corporate-blue;
-    background: $corporate-white;
-    border: none;
+    z-index: 20;
+    width: 135px;
+    height: 50px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px 0 rgba(53, 58, 140, 0.3);
+    border: solid 1px $ims-charcoal-grey;
+    min-height: 50px;
+    color: $ims-blueberry;
+    background: $ims-white;
     margin: 2px;
 
     &.selected {
-        background: $corporate-green;
-        color: $corporate-white;
+        background: $ims-seafoam-blue;
+        color: $ims-white;
     }
 }
 
@@ -70,13 +75,13 @@
 
 .primary {
     color: white;
-    background: $corporate-blue;
+    background: $ims-blueberry;
 }
 
 .secondary {
-    color: $corporate-blue;
+    color: $ims-blueberry;
     background: $primary-white;
-    border: 1px solid $corporate-blue;
+    border: 1px solid $ims-blueberry;
 }
 
 .areaName {
@@ -87,4 +92,3 @@
 .white {
     background: $corporate-white;
 }
-

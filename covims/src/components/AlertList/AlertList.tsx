@@ -1,5 +1,6 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, HTMLProps} from "react";
 import {connect, ConnectedProps} from "react-redux";
+import classNames from "classnames";
 
 import {filteredAlerts} from "../../reducers/alerts";
 import {filterToggle} from "../../actions";
@@ -14,6 +15,7 @@ import {
     faTruckPickup
 } from "@fortawesome/free-solid-svg-icons";
 import Alert from '../Alert';
+import SidePanel from "../SidePanel";
 
 function FilterButton(props: any) {
     let selected = props.filter.indexOf(props.id);
@@ -37,9 +39,9 @@ interface IProps {
 interface IState {
 }
 
-type MyProps = PropsFromRedux & IProps;
+type MyProps = PropsFromRedux & IProps ;
 
-class AlertList extends React.Component<IProps, IState> {
+class AlertList extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState> {
 
     doChange = (e: ChangeEvent) => {
         e.persist();
@@ -47,39 +49,39 @@ class AlertList extends React.Component<IProps, IState> {
     }
 
     render() {
-        const alerts = this.props.alerts;
+        const {alerts, filter, filterToggle, className} = this.props;
         const alertTitle = (alerts && alerts.length) ?
             alerts.length + (alerts.length > 1 ? ' Alerts' : ' Alert') : 'No Alerts';
 
-        return <div className='settings'>
-            <h1>East | South</h1>
+        return <SidePanel className={classNames('alerts', className)}>
+            <h1>Alerts East | South</h1>
             <h2>Filters</h2>
             <div className='well'>
                 <div className='filter-row'>
                     <FilterButton id='broken' icon={faTruckPickup}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
-                        Broken Down
+                                  filter={filter} filterToggle={filterToggle}>
+                        Breakdowns
                     </FilterButton>
                     <FilterButton id='collision' icon={faCarCrash}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
+                                  filter={filter} filterToggle={filterToggle}>
                         Collision
                     </FilterButton>
                     <FilterButton id='lights' icon={faTrafficLight}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
-                        Faulty Traffic Lights
+                                  filter={filter} filterToggle={filterToggle}>
+                        Faulty Signals
                     </FilterButton>
                 </div>
                 <div className='filter-row'>
                     <FilterButton id='closure' icon={faTimesCircle}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
+                                  filter={filter} filterToggle={filterToggle}>
                         Road Closure
                     </FilterButton>
                     <FilterButton id='hazard' icon={faSmog}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
+                                  filter={filter} filterToggle={filterToggle}>
                         Hazards
                     </FilterButton>
                     <FilterButton id='traffic' icon={faCarSide}
-                                  filter={this.props.filter} filterToggle={this.props.filterToggle}>
+                                  filter={filter} filterToggle={filterToggle}>
                         Traffic
                     </FilterButton>
                 </div>
@@ -96,7 +98,7 @@ class AlertList extends React.Component<IProps, IState> {
                         <Alert key={a.id} title={a.title} text={a.text} time={a.time}/>))}
                 </div>
             </div>
-        </div>
+        </SidePanel>
     }
 }
 

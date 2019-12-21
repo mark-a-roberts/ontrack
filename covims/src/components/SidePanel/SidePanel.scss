@@ -2,7 +2,8 @@
 
 .sidepanel {
   width: 484px;
-  height: 1024px;
+  height: 100vh;
   box-shadow: 4px 0 10px 0 rgba(53, 58, 140, 0.3);
   background-color: $ims-pale-blue;
+  z-index: 10;
 }
