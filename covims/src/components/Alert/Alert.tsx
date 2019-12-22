@@ -1,4 +1,5 @@
-import React from "react";
+import React, {HTMLProps} from "react";
+import classNames from "classnames";
 
 import './Alert.scss';
 
@@ -9,7 +10,8 @@ import './Alert.scss';
 interface AlertProps {
     title?: string;
     text?: string;
-    time?: Date
+    time?: Date,
+    completed: boolean
 }
 
 const SEC = 1000;
@@ -47,24 +49,19 @@ function timeDifference(t1: Date, t2: Date): string {
 
 }
 
-const Alert: React.FC<AlertProps> = (props) => {
-    const {title, text, time } = props;
+const Alert: React.FC<AlertProps & HTMLProps<HTMLDivElement>> = (props) => {
+    const { title, text, time, completed, className } = props;
     const now = new Date();
-    return <div>
-        <div className='alert'>
-            <div className='alert-type'>
-                New
-            </div>
+    const aClass = 'alert' + (completed ? '' : ' alert--new');
+    return <div className={classNames(aClass, className)}>
             <div className='alert-info'>
-                <h4>{title}</h4>
-                <p>{text}</p>
+                <h4 className='alert-category'>{title}</h4>
+                <div className='alert-location'>{text}</div>
             </div>
             <div className='alert-time'>
                 {time ? timeDifference(now, time) : '---'}
             </div>
         </div>
-        <hr/>
-    </div>
 };
 
 export default Alert;

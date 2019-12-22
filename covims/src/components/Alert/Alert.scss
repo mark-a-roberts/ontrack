@@ -1,21 +1,11 @@
-@import '../../tfl-ui/_colors.scss';
-
-.alerts {
-  background: $ims-white;
-  height: calc(100vh - 300px);
-  overflow: hidden;
-}
-
-.alert-list {
-  max-height: 80%;
-  height: 100%;
-  overflow-y: auto;
-}
+@import '../../assets/styles/_colors';
 
 .alert {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-left: 8px solid $ims-white;
+
   &-type {
     min-width: 30px;
     margin-top: 10px;
@@ -26,8 +16,24 @@
       margin: 2px 0;
     }
   }
+
+  &-location {
+    height: 14px;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--battleship-grey);
+  }
+
   &-time {
     text-align:right;
     font-size: 9px;
+  }
+  &--new {
+    border-left-color: $ims-seafoam-blue;
   }
 }

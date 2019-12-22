@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {HTMLProps} from 'react';
 import './marker.scss';
 
-const Marker = (props: any) => {
-    const { color, name, id } = props;
+interface MarkerProps {
+    id?: string,
+    name?: string,
+    color: string,
+    lat: number | undefined,
+    lng: number | undefined
+}
+
+const Marker: React.FC<MarkerProps & HTMLProps<HTMLDivElement>> = (props: any) => {
+    const {color, name, id, children} = props;
     return (
         <div className="marker" id={id}
-             style={{ backgroundColor: color, cursor: 'pointer'}}
+             style={{backgroundColor: color, cursor: 'pointer'}}
              title={name}
-        />
+        >{children}</div>
     );
 
 };

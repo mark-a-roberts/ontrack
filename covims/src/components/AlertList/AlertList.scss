@@ -1,0 +1,9 @@
+@import '../../assets/styles/_colors';
+
+.alert-list {
+  max-height: 80%;
+  height: 100%;
+  overflow-y: auto;
+  background: $ims-white;
+  padding: 0 39px 0 25px;
+}

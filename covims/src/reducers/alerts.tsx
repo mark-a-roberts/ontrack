@@ -37,7 +37,7 @@ const mockAlert = () : IAlert => {
         text: 'some text',
         time: testDate(),
         ...position,
-        completed: false
+        completed: Math.random() > 0.5 ? true : false
     }
 }
 

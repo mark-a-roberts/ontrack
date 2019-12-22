@@ -1,26 +1,43 @@
-import './mark';
-import GoogleMapReact from "google-map-react";
-import Marker from "./mark";
 import React from "react";
+import GoogleMapReact from "google-map-react";
+import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome";
+import {
+    faCarCrash,
+    faCarSide,
+    faSmog,
+    faTimesCircle,
+    faTrafficLight,
+    faTruckPickup
+} from "@fortawesome/free-solid-svg-icons";
+
 import {IAlert} from "../../reducers/alerts";
 
-const colors:any = {
-    broken: 'turquoise',
-    hazard: 'red',
-    collision: 'green',
-    lights: 'blue',
-    closure: 'yellow',
-    traffic: 'white'
+import Marker from "./mark";
+
+interface AlertMap {
+    color: string;
+    icon: string;
 }
 
-function Map(props:any) {
+const alert:any = {
+    broken: { color: 'white', icon: faTruckPickup},
+    hazard: { color: 'white', icon: faSmog },
+    collision: { color: 'white', icon: faCarCrash},
+    lights: {color: 'white', icon: faTrafficLight },
+    closure: { color: 'white', icon: faTimesCircle},
+    traffic: { color: 'white', icon: faCarSide}
+}
+
+const Map = (props:any) => {
     return <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I' }}
         defaultCenter={props.center}
         defaultZoom={props.zoom}
     >
         {props.alerts && props.alerts.map((a:IAlert) => (
-            <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={colors[a.type] || 'orange'} />
+            <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={alert[a.type].color || 'orange'}>
+                <Icon className='marker-icon' icon={alert[a.type].icon}/>
+            </Marker>
         ))}
     </GoogleMapReact>
 }

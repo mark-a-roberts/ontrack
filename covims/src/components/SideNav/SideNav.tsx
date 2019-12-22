@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Switch} from "react-router";
 import {NavLink} from "react-router-dom";
-import logo from '../../tfl-ui/logo.svg';
+import logo from '../../assets/images/logo.svg';
 
-import AlertList from '../AlertList';
+import Alerts from '../Alerts';
 import Settings from '../Settings';
 
 import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome'
@@ -35,7 +35,7 @@ const SideNav: React.FC<IProps> = (props) => {
             </div>
             <Switch>
                 <Route path='/alerts'>
-                    <AlertList/>
+                    <Alerts/>
                 </Route>
                 <Route>
                     <Settings/>
