@@ -12,19 +12,19 @@ export interface IAlert {
     completed: boolean;
 }
 
-function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
 const alertTypes: AlertType[] = [
     'broken' , 'hazard' , 'collision' , 'closure' , 'lights' , 'traffic'
 ];
+
+function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
 
 const mockAlert = () : IAlert => {
     const type:AlertType = alertTypes[Math.floor(Math.random() * alertTypes.length)];
     let position = {
         lat: 51.25 + Math.random()*0.5,
-        lng: -0.25 + Math.random()*0.5,
+        lng: -0.70 + Math.random(),
     };
 
     let area = (position.lat < 51.5) ? 'south' :
@@ -39,8 +39,7 @@ const mockAlert = () : IAlert => {
         ...position,
         completed: Math.random() > 0.5 ? true : false
     }
-}
-
+};
 
 const initialState: Array<IAlert> = Array.from( { length:1000}, () => mockAlert());
 

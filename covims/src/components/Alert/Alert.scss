@@ -19,7 +19,7 @@
 
   &-location {
     height: 14px;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     font-size: 12px;
     font-weight: normal;
     font-stretch: normal;
@@ -31,7 +31,15 @@
 
   &-time {
     text-align:right;
-    font-size: 9px;
+    height: 16px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--midnight)
   }
   &--new {
     border-left-color: $ims-seafoam-blue;

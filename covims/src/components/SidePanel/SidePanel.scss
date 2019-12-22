@@ -7,3 +7,28 @@
   background-color: $ims-pale-blue;
   z-index: 10;
 }
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.well {
+  margin: 5px;
+  padding: 5px;
+}
+
+.button {
+  padding: 10px;
+}
+
+.primary {
+  color: white;
+  background: $ims-blueberry;
+}
+
+.secondary {
+  color: $ims-blueberry;
+  background: $primary-white;
+  border: 1px solid $ims-blueberry;
+}

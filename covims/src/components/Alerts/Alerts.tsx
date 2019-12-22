@@ -60,8 +60,8 @@ class Alerts extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState>
         return <SidePanel className={classNames('alerts', className)}>
             <h1>Alerts <span className='alerts-areas'>{areas ? areas.map((a) => capitalize(a)).join(', ') : ''}</span>
             </h1>
-            <h2>Filters</h2>
             <div className='well'>
+                <h3>Filters</h3>
                 <div className='filter-row'>
                     <FilterButton id='broken' icon={faTruckPickup}
                                   filter={filter} filterToggle={filterToggle}>
@@ -95,13 +95,13 @@ class Alerts extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState>
                 <span className='alerts-sorting'>
                     Sorted by:
                     <select onChange={this.doChange} name='alert-sort'>
-                        <option>Most Recent</option>
-                        <option>Oldest</option>
+                        <option>Recent First</option>
+                        <option>Oldest First</option>
                     </select>
                 </span>
                 {alertTitle}
             </h3>
-             <AlertList alerts={alerts} />
+            <AlertList alerts={alerts} />
         </SidePanel>
     }
 }

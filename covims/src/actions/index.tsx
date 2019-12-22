@@ -77,3 +77,23 @@ export function areaOff(area: string): AreaAction {
         payload: area
     }
 }
+
+/*
+    Map Actions
+*/
+
+export const MAP_UPDATE  = 'MAP_UPDATE';
+
+export type MAP_ACTION = typeof MAP_UPDATE;
+
+export interface MapAction {
+    type: string,
+    payload: any
+}
+
+export function mapUpdate(payload:any) : MapAction {
+    return {
+        type: MAP_UPDATE,
+        payload
+    }
+}

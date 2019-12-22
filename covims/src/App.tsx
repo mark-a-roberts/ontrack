@@ -9,11 +9,11 @@ import './App.css';
 
 const App: React.FC = (props: any) => {
     let defaultProps = {
-        center: {
+        defaultCenter: {
             lat: 51.5,
-            lng: -0.12
+            lng: -0.20
         },
-        zoom: 11
+        defaultZoom: 10
     };
     return (
         <Router>
@@ -32,6 +32,7 @@ const App: React.FC = (props: any) => {
  */
 const mapState = (state: any) => {
     return {
+        map: state.map,
         alerts: filteredAlerts(state.alerts, state.filter, state.areas),
         filter: state.filter,
         sort: state.sort

@@ -13,6 +13,7 @@ import {
 import {IAlert} from "../../reducers/alerts";
 
 import Marker from "./mark";
+import classNames from "classnames";
 
 interface AlertMap {
     color: string;
@@ -29,17 +30,19 @@ const alert:any = {
 }
 
 const Map = (props:any) => {
+    const { alerts, className, ...otherProps } = props;
+
     return <GoogleMapReact
+        className={classNames(className)}
         bootstrapURLKeys={{ key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I' }}
-        defaultCenter={props.center}
-        defaultZoom={props.zoom}
+        {...otherProps}
     >
-        {props.alerts && props.alerts.map((a:IAlert) => (
+        {alerts && alerts.map((a:IAlert) => (
             <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={alert[a.type].color || 'orange'}>
                 <Icon className='marker-icon' icon={alert[a.type].icon}/>
             </Marker>
         ))}
     </GoogleMapReact>
-}
+};
 
 export default Map;
