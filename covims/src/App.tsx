@@ -5,7 +5,7 @@ import Map from './components/Map';
 import {connect} from "react-redux";
 import {filteredAlerts} from "./reducers/alerts";
 
-import './App.css';
+import './App.scss';
 
 const App: React.FC = (props: any) => {
     let defaultProps = {
