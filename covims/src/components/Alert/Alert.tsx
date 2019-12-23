@@ -54,6 +54,7 @@ const Alert: React.FC<AlertProps & HTMLProps<HTMLDivElement>> = (props) => {
     const now = new Date();
     const aClass = 'alert' + (completed ? '' : ' alert--new');
     return <div className={classNames(aClass, className)}>
+            <div className='alert-area'></div>
             <div className='alert-info'>
                 <h4 className='alert-category'>{title}</h4>
                 <div className='alert-location'>{text}</div>

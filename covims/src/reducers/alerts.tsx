@@ -1,8 +1,7 @@
-type AlertType = 'broken' | 'hazard' | 'collision' | 'closure' | 'lights' | 'traffic';
 
 export interface IAlert {
     id: string;
-    type: AlertType;
+    type: string;
     area: string;
     title: string;
     text: string;
@@ -12,16 +11,45 @@ export interface IAlert {
     completed: boolean;
 }
 
-const alertTypes: AlertType[] = [
-    'broken' , 'hazard' , 'collision' , 'closure' , 'lights' , 'traffic'
-];
+type AlertType = {
+    [key: string]: {
+        name: string;
+    }
+};
+
+export const alertTypes: AlertType = {
+    broken: {
+        name: 'Breakdown'
+    },
+    hazard: {
+        name: 'Hazard'
+    },
+    collision: {
+        name: 'Collision'
+    },
+    closure: {
+        name: 'Road Closure'
+    },
+    lights: {
+        name: 'Faulty Signal'
+    },
+    traffic: {
+        name: 'Traffic'
+    }
+};
+
+const alertKeys = Object.keys(alertTypes);
 
 function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
+const randomAlert = () => {
+    return alertKeys[ alertKeys.length * Math.random() << 0];
+};
+
 const mockAlert = () : IAlert => {
-    const type:AlertType = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+    const type = randomAlert();
     let position = {
         lat: 51.25 + Math.random()*0.5,
         lng: -0.70 + Math.random(),
@@ -33,7 +61,7 @@ const mockAlert = () : IAlert => {
         id: '' + Math.floor(Math.random() * 1000000),
         type,
         area,
-        title: type,
+        title: alertTypes[type].name,
         text: 'some text',
         time: testDate(),
         ...position,

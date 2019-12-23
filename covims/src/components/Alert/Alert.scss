@@ -6,12 +6,18 @@
   justify-content: space-between;
   border-left: 8px solid $ims-white;
 
+  &-area {
+    width: 62px;
+  }
+
   &-type {
     min-width: 30px;
     margin-top: 10px;
   }
   &-info {
+    flex-grow: 1;
     min-width: 150px;
+    text-align: left;
     h4 {
       margin: 2px 0;
     }
