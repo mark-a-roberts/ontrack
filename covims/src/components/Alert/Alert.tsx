@@ -10,6 +10,9 @@ import './Alert.scss';
 interface AlertProps {
     title?: string;
     text?: string;
+    /** Area of Alert */
+    area?: string;
+    /** Time of Alert */
     time?: Date,
     completed: boolean
 }
@@ -23,11 +26,8 @@ function timeDifference(t1: Date, t2: Date): string {
     let ds = '';
     if (timeDiff < HOUR) {
         let min = Math.floor(timeDiff / MIN);
-        if (min !== 0) {
-            ds = min + ' mins ago';
-        } else {
-            ds = Math.floor(timeDiff / SEC) + ' secs ago';
-        }
+            ds = (min !== 0) ? min + ' mins ago' :
+            Math.floor(timeDiff / SEC) + ' secs ago';
     } else {
         const today = t1.toDateString();
         let y: Date = new Date(t1);
@@ -50,11 +50,15 @@ function timeDifference(t1: Date, t2: Date): string {
 }
 
 const Alert: React.FC<AlertProps & HTMLProps<HTMLDivElement>> = (props) => {
-    const { title, text, time, completed, className } = props;
+    const { title, text, time, area, completed, className } = props;
     const now = new Date();
     const aClass = 'alert' + (completed ? '' : ' alert--new');
     return <div className={classNames(aClass, className)}>
-            <div className='alert-area'></div>
+            <div>
+                <div className='oval'>
+                    <div className='alert-area'>{(area && area.charAt(0).toUpperCase()) || '-'}</div>
+                </div>
+            </div>
             <div className='alert-info'>
                 <h4 className='alert-category'>{title}</h4>
                 <div className='alert-location'>{text}</div>
