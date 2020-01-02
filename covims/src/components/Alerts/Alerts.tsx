@@ -1,4 +1,4 @@
-import React, {ChangeEvent, HTMLProps} from "react";
+import React, {ChangeEvent, HTMLProps} from 'react';
 import {connect, ConnectedProps} from "react-redux";
 import classNames from "classnames";
 
@@ -106,12 +106,12 @@ class Alerts extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState>
     }
 }
 
+
 const mapState = (state: any) => {
     return {
         areas: state.areas,
         alerts: filteredAlerts(state.alerts, state.filter, state.areas),
         filter: state.filter,
-        sort: state.sort
     }
 };
 

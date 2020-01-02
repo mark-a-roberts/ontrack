@@ -1,12 +1,12 @@
-import { AREA_OFF, AREA_ON, AREA_TOGGLE, AreaAction} from "../actions";
+import {AREA_OFF, AREA_ON, AREA_TOGGLE, AreaAction} from "../actions";
 
 export interface IArea {
-    [index:number] : string
+    [index: number]: string
 }
 
 const initialState: IArea = [];
 
-export function areaReducer( state:IArea = initialState, action: AreaAction): IArea {
+export function areaReducer(state: IArea = initialState, action: AreaAction): IArea {
     // When the app loads this would check for the state, which is undefined, so set it to null in the argument.
     let index: number, newState: Array<string>;
     switch (action.type) {
@@ -16,7 +16,7 @@ export function areaReducer( state:IArea = initialState, action: AreaAction): IA
             index = newState.indexOf(action.payload);
 
             if (index === -1) {
-                newState.push( action.payload)
+                newState.push(action.payload)
             } else {
                 newState.splice(index, 1);
             }
@@ -27,7 +27,7 @@ export function areaReducer( state:IArea = initialState, action: AreaAction): IA
             index = newState.indexOf(action.payload);
 
             if (index === -1) {
-                newState.push( action.payload)
+                newState.push(action.payload)
             } else {
                 newState.splice(index, 1);
             }

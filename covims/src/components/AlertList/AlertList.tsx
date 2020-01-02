@@ -1,6 +1,5 @@
-import React, {ChangeEvent, HTMLProps} from "react";
+import React, {ChangeEvent, HTMLProps} from 'react';
 import classNames from "classnames";
-
 
 import Alert from '../Alert';
 
@@ -11,21 +10,34 @@ interface AlertListProps {
 }
 
 interface IState {
+    openItem: string;
 }
 
-class AlertList extends React.Component<AlertListProps & HTMLProps<HTMLDivElement>, IState> {
+type AllProps = AlertListProps & HTMLProps<HTMLUListElement>
 
-    doChange = (e: ChangeEvent) => {
+class AlertList extends React.Component<AllProps, IState> {
+    constructor(props:AllProps) {
+        super(props);
+        this.state = {
+            openItem: ''
+        }
+    }
+
+    toggleAlert = (e: ChangeEvent) => {
         e.persist();
-        console.log(e)
+        e.preventDefault();
+        const openItem = (e.currentTarget.id === this.state.openItem) ? '' : e.currentTarget.id;
+        this.setState({openItem});
     };
 
     render() {
         const {alerts, className} = this.props;
-        return <div className={classNames('alert-list', className)}>
+        const {openItem} = this.state;
+
+        return <ul className={classNames('alert-list', className)}>
             {alerts && alerts.map((a: any) => (
-                <Alert key={a.id} {...a} />))}
-        </div>;
+                <Alert key={a.id} {...a} open={a.id === openItem} toggle={this.toggleAlert}/>))}
+        </ul>;
     }
 }
 

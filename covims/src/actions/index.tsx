@@ -4,6 +4,7 @@
 export const FILTER_ON = 'FILTER ON';
 export const FILTER_OFF = 'FILTER OFF';
 export const FILTER_TOGGLE = 'FILTER TOGGLE';
+export const FILTER_SORT = 'FILTER_SORT'
 
 export type FILTER_ACTION = typeof FILTER_ON | typeof FILTER_OFF | typeof FILTER_TOGGLE;
 
@@ -22,7 +23,12 @@ interface FilterOnAction {
     payload: string
 }
 
-export type FilterActionTypes = FilterToggleAction | FilterOffAction | FilterOnAction
+interface FilterSortAction {
+    type: typeof FILTER_SORT
+    payload: string
+}
+
+export type FilterActionTypes = FilterToggleAction | FilterOffAction | FilterOnAction | FilterSortAction;
 
 export function filterToggle(filter: string): FilterActionTypes {
     return {

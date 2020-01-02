@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import GoogleMapReact from "google-map-react";
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome";
 import {
@@ -10,7 +10,7 @@ import {
     faTruckPickup
 } from "@fortawesome/free-solid-svg-icons";
 
-import {IAlert} from "../../reducers/alerts";
+import {Alert} from "../../data/alert";
 
 import Marker from "./mark";
 import classNames from "classnames";
@@ -37,7 +37,7 @@ const Map = (props:any) => {
         bootstrapURLKeys={{ key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I' }}
         {...otherProps}
     >
-        {alerts && alerts.map((a:IAlert) => (
+        {alerts && alerts.map((a:Alert) => (
             <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={alert[a.type].color || 'orange'}>
                 <Icon className='marker-icon' icon={alert[a.type].icon}/>
             </Marker>

@@ -1,84 +1,15 @@
+import {Alert} from "../data/alert";
+import {mockAlert} from './alerts.mock';
 
-export interface IAlert {
-    id: string;
-    type: string;
-    area: string;
-    title: string;
-    text: string;
-    time: Date;
-    lat?: number;
-    lng?:number;
-    completed: boolean;
-}
-
-type AlertType = {
-    [key: string]: {
-        name: string;
-    }
-};
-
-export const alertTypes: AlertType = {
-    broken: {
-        name: 'Breakdown'
-    },
-    hazard: {
-        name: 'Hazard'
-    },
-    collision: {
-        name: 'Collision'
-    },
-    closure: {
-        name: 'Road Closure'
-    },
-    lights: {
-        name: 'Faulty Signal'
-    },
-    traffic: {
-        name: 'Traffic'
-    }
-};
-
-const alertKeys = Object.keys(alertTypes);
-
-function testDate(start = new Date( 2019, 11, 1), end = new Date()) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-const randomAlert = () => {
-    return alertKeys[ alertKeys.length * Math.random() << 0];
-};
-
-const mockAlert = () : IAlert => {
-    const type = randomAlert();
-    let position = {
-        lat: 51.25 + Math.random()*0.5,
-        lng: -0.70 + Math.random(),
-    };
-
-    let area = (position.lat < 51.5) ? 'south' :
-        ((position.lng > 0.10) ? 'east'  : ((position.lng < -0.10) ? 'west' : 'central'));
-    return  {
-        id: '' + Math.floor(Math.random() * 1000000),
-        type,
-        area,
-        title: alertTypes[type].name,
-        text: 'some text',
-        time: testDate(),
-        ...position,
-        completed: Math.random() > 0.5 ? true : false
-    }
-};
-
-const initialState: Array<IAlert> = Array.from( { length:1000}, () => mockAlert());
+const initialState: Array<Alert> = Array.from({length: 1000}, () => mockAlert());
 
 class ActionType {
     id!: string;
     type!: string;
-    payload!: IAlert;
-    completed!: boolean;
+    payload!: Alert;
 }
 
-export function alertReducer(state = initialState, action: ActionType): Array<IAlert> {
+export function alertReducer(state = initialState, action: ActionType): Array<Alert> {
     // When the app loads this would check for the state, which is undefined, so set it to null in the argument.
     switch (action.type) {
         case 'ADD':
@@ -89,16 +20,28 @@ export function alertReducer(state = initialState, action: ActionType): Array<IA
                 }];
         case 'DELETE':
             return state.filter(
-                    alert => alert.id !== action.payload.id
+                alert => alert.id !== action.payload.id
             );
         default:
             return state;
     }
 }
 
-export const filteredAlerts = (alerts: IAlert[], filters: string[], areas: string[]) => {
-    let sorted = alerts.slice().sort((a: any, b: any) => (b.time - a.time));
+type Comparator = (a: any, b: any) => number;
+
+const sorters: { [key: string]: Comparator } = {
+    latest: (a: any, b: any) => (b.time - a.time),
+    oldest: (a: any, b: any) => (a.time - b.time)
+};
+
+export const filteredAlerts = (alerts: Alert[], filters: string[], areas: string[]) => {
+    // probably need to filter by area bounding boxes...
+    const inArea = alerts.filter((a) => (areas.indexOf(a.area) > -1));
     return filters.length ?
-        sorted.filter((a: IAlert) => (filters.indexOf(a.type) >= 0)) :
-        sorted;
+        inArea.filter((a: Alert) => (filters.indexOf(a.type) >= 0)) :
+        inArea;
+};
+
+export const sortedAlerts = (alerts: Alert[], sort: 'latest' | 'oldest') => {
+    return alerts.sort(sorters[sort]);
 };

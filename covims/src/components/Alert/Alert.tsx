@@ -1,4 +1,4 @@
-import React, {HTMLProps} from "react";
+import React, {HTMLProps, MouseEvent} from 'react';
 import classNames from "classnames";
 
 import './Alert.scss';
@@ -15,6 +15,7 @@ interface AlertProps {
     /** Time of Alert */
     time?: Date,
     completed: boolean
+    toggle: (e:MouseEvent<HTMLElement>) => void
 }
 
 const SEC = 1000;
@@ -26,7 +27,7 @@ function timeDifference(t1: Date, t2: Date): string {
     let ds = '';
     if (timeDiff < HOUR) {
         let min = Math.floor(timeDiff / MIN);
-            ds = (min !== 0) ? min + ' mins ago' :
+        ds = (min !== 0) ? min + ' mins ago' :
             Math.floor(timeDiff / SEC) + ' secs ago';
     } else {
         const today = t1.toDateString();
@@ -49,11 +50,33 @@ function timeDifference(t1: Date, t2: Date): string {
 
 }
 
-const Alert: React.FC<AlertProps & HTMLProps<HTMLDivElement>> = (props) => {
-    const { title, text, time, area, completed, className } = props;
+type AllProps = AlertProps & HTMLProps<HTMLLIElement>;
+
+const AlertView: React.FC<AllProps> = (props : AllProps) => {
+    const {title, text, time, area, completed, open, className, toggle, ...otherProps} = props;
     const now = new Date();
     const aClass = 'alert' + (completed ? '' : ' alert--new');
-    return <div className={classNames(aClass, className)}>
+    const viewTime = time ? timeDifference(now, time) : '---';
+    return  open ?
+        <li className={classNames(aClass,'alert--open', className)} {...otherProps}>
+            <h2>{title} <span className="alert-close" onClick={toggle}>X</span></h2>
+            <p>{text}</p>
+            <p>{viewTime}</p>
+            <div><h5>What would you like to do to this alert?</h5>
+                <button type='button' className='button primary'>Convert into an incident</button>
+                <button type='button' className='button primary'>Dismiss alert</button>
+            </div>
+            <div>
+                <h5>Related information</h5>
+                <details>
+                    <summary>CCTV</summary>
+                </details>
+                <details>
+                    <summary>TIMS</summary>
+                </details>
+            </div>
+        </li> :
+        <li className={classNames(aClass, className)} onClick={toggle} {...otherProps}>
             <div>
                 <div className='oval'>
                     <div className='alert-area'>{(area && area.charAt(0).toUpperCase()) || '-'}</div>
@@ -64,9 +87,10 @@ const Alert: React.FC<AlertProps & HTMLProps<HTMLDivElement>> = (props) => {
                 <div className='alert-location'>{text}</div>
             </div>
             <div className='alert-time'>
-                {time ? timeDifference(now, time) : '---'}
+                {viewTime}
             </div>
-        </div>
+
+        </li>;
 };
 
-export default Alert;
+export default AlertView;
