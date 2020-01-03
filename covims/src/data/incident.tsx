@@ -1,12 +1,12 @@
 export interface Incident {
     id: string;
-    type: string;
+    type?: string;
     title: string;
-    text: string;
-    time: Date;
+    text?: string;
+    time?: Date;
     lat?: number;
     lng?:number;
-    completed: boolean;
+    completed?: boolean;
 }
 
 type IncidentInstance = {

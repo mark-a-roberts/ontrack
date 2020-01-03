@@ -3,6 +3,9 @@ import classNames from "classnames";
 
 import './Alert.scss';
 
+import {Incident} from "../../data/incident";
+import {CCTV} from "../../data/cctv";
+
 /*
     Alert
  */
@@ -15,7 +18,7 @@ interface AlertProps {
     /** Time of Alert */
     time?: Date,
     completed: boolean
-    toggle: (e:MouseEvent<HTMLElement>) => void
+    toggle: (e: MouseEvent<HTMLElement>) => void
 }
 
 const SEC = 1000;
@@ -52,13 +55,24 @@ function timeDifference(t1: Date, t2: Date): string {
 
 type AllProps = AlertProps & HTMLProps<HTMLLIElement>;
 
-const AlertView: React.FC<AllProps> = (props : AllProps) => {
+const AlertView: React.FC<AllProps> = (props: AllProps) => {
+    const incidents: Incident[] = [
+        { id: 'tim-test1', title: '167 Blackfriars Rd', type: 'Hazerd | Flooding'},
+        { id: 'tim-test2', title: '167 Blackfriars Rd', type: 'Accident'},
+        { id: 'tim-test3', title: '167 Blackfriars Rd', type: 'Collision'}
+    ];
+    const cctv: CCTV[] = [
+        { id: 'cctv-test1', title: '167 Blackfriars Rd', type: 'Borough'},
+        { id: 'cctv-test2', title: '167 Blackfriars Rd', type: 'Police'},
+        { id: 'cctv-test3', title: '167 Blackfriars Rd', type: 'TFL'}
+    ];
+
     const {title, text, time, area, completed, open, className, toggle, ...otherProps} = props;
     const now = new Date();
     const aClass = 'alert' + (completed ? '' : ' alert--new');
     const viewTime = time ? timeDifference(now, time) : '---';
-    return  open ?
-        <li className={classNames(aClass,'alert--open', className)} {...otherProps}>
+    return open ?
+        <li className={classNames(aClass, 'alert--open', className)} {...otherProps}>
             <h2>{title} <span className="alert-close" onClick={toggle}>X</span></h2>
             <p>{text}</p>
             <p>{viewTime}</p>
@@ -70,17 +84,35 @@ const AlertView: React.FC<AllProps> = (props : AllProps) => {
                 <h5>Related information</h5>
                 <details>
                     <summary>CCTV</summary>
+                    <ul className={'cctv-list'}>
+                    {cctv.map((item: CCTV) => (
+                        <li className={'cctv'}>
+                            <div className={'cctv-id'}>{item.id}</div>
+                            <div className={'cctv-location'}>{item.title}</div>
+                            <div className={'cctv-type'}>{item.type}</div>
+                        </li>
+                    ))}
+                    </ul>
                 </details>
                 <details>
                     <summary>TIMS</summary>
+                    <ul className={'incident-list'}>
+                    {
+                        incidents.map((item: Incident) => (
+                            <li className={'incident'}>
+                                <div className={'incident-id'}>{item.id}</div>
+                                <div className={'incident-location'}>{item.title}</div>
+                                <div className={'incident-type'}>{item.type}</div>
+                            </li>
+                        ))
+                    }
+                    </ul>
                 </details>
             </div>
         </li> :
         <li className={classNames(aClass, className)} onClick={toggle} {...otherProps}>
-            <div>
-                <div className='oval'>
-                    <div className='alert-area'>{(area && area.charAt(0).toUpperCase()) || '-'}</div>
-                </div>
+            <div className='oval alert-area'>
+                {(area && area.charAt(0).toUpperCase()) || '-'}
             </div>
             <div className='alert-info'>
                 <h4 className='alert-category'>{title}</h4>

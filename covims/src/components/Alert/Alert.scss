@@ -7,13 +7,13 @@
   border-left: 8px solid $ims-white;
   border-radius: 2px;
   box-shadow: 0 2px 4px 0 rgba(53, 58, 140, 0.3);
-  padding: 5px 2px 7px 2px;
+  padding: 5px 5px 7px 5px;
   list-style-type: none;
 
   .oval {
     box-sizing: border-box;
-    padding: 10% 2px;
-    margin: 0 16px;
+    padding: 2px 2px;
+    margin: 0 5px;
     width: 30px;
     height: 30px;
     border: 1px solid $ims-blueberry;
@@ -69,8 +69,9 @@
   &--open {
     display: block;
     text-align: left;
+    padding: 5px 20px;
     details {
-      width: 380px;
+      width: 100%;
       border-radius: 3px;
       box-shadow: 2px 2px 4px 0 rgba(53, 58, 140, 0.3);
       border: solid 1px var(--blueberry);
@@ -92,4 +93,40 @@
   &-close {
     float: right;
   }
+}
+
+@mixin boxy {
+  &-list {
+    padding: 15px;
+    list-style-type: none;
+  }
+  padding: 10px;
+  min-height: 90px;
+  border-radius: 2px;
+  margin-top: 5px;
+  background-color: $ims-ice-blue;
+  color: $ims-midnight;
+  line-height: 20px;
+  font-size: 14px;
+
+  & div {
+    margin-top: 5px;
+  }
+
+  &-id {
+    font-weight: bold;
+    color: $ims-charcoal-grey;
+  }
+}
+
+
+.cctv {
+  @include boxy;
+  border-left: 5px solid $ims-muted-green;
+}
+
+.incident {
+  @include boxy;
+  border-left: 5px solid $ims-blueberry;
+
 }

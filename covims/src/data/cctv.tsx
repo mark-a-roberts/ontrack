@@ -1,12 +1,10 @@
 export interface CCTV {
     id: string;
-    type: string;
+    type?: string;
     title: string;
-    text: string;
-    time: Date;
+    text?: string;
     lat?: number;
     lng?:number;
-    completed: boolean;
 }
 
 type CCTVInstance = {
