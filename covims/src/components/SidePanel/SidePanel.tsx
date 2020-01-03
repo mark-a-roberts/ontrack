@@ -8,7 +8,7 @@ interface SidePanelProps {
 }
 
 const SidePanel: React.FC<SidePanelProps & HTMLProps<HTMLDivElement>> = (props) => {
-    const { children, className} = props;
+    const {children, className} = props;
     return <div className={classNames('sidepanel', className)}>
         {children}
     </div>

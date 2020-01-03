@@ -19,6 +19,7 @@
     border: 1px solid $ims-blueberry;
     border-radius: 50%;
   }
+
   &-area {
     color: $ims-blueberry;
   }
@@ -38,6 +39,7 @@
     margin: 2px 0;
     color: $ims-midnight
   }
+
   &-location {
     height: 14px;
     font-family: Arial, sans-serif;
@@ -51,7 +53,7 @@
   }
 
   &-time {
-    text-align:right;
+    text-align: right;
     height: 16px;
     font-family: Arial, sans-serif;
     font-size: 14px;
@@ -62,6 +64,7 @@
     letter-spacing: normal;
     color: var(--midnight)
   }
+
   &--new {
     border-left-color: $ims-seafoam-blue;
   }
@@ -70,13 +73,16 @@
     display: block;
     text-align: left;
     padding: 5px 20px;
+
     details {
       width: 100%;
       border-radius: 3px;
       box-shadow: 2px 2px 4px 0 rgba(53, 58, 140, 0.3);
       border: solid 1px var(--blueberry);
       background-color: var(--white);
+      padding: 15px;
     }
+
     summary {
       font-family: Arial, sans-serif;
       font-size: 14px;
@@ -97,7 +103,7 @@
 
 @mixin boxy {
   &-list {
-    padding: 15px;
+    padding: 0;
     list-style-type: none;
   }
   padding: 10px;

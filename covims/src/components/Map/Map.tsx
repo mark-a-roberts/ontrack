@@ -20,24 +20,24 @@ interface AlertMap {
     icon: string;
 }
 
-const alert:any = {
-    broken: { color: 'white', icon: faTruckPickup},
-    hazard: { color: 'white', icon: faSmog },
-    collision: { color: 'white', icon: faCarCrash},
-    lights: {color: 'white', icon: faTrafficLight },
-    closure: { color: 'white', icon: faTimesCircle},
-    traffic: { color: 'white', icon: faCarSide}
+const alert: any = {
+    broken: {color: 'white', icon: faTruckPickup},
+    hazard: {color: 'white', icon: faSmog},
+    collision: {color: 'white', icon: faCarCrash},
+    lights: {color: 'white', icon: faTrafficLight},
+    closure: {color: 'white', icon: faTimesCircle},
+    traffic: {color: 'white', icon: faCarSide}
 }
 
-const Map = (props:any) => {
-    const { alerts, className, ...otherProps } = props;
+const Map = (props: any) => {
+    const {alerts, className, ...otherProps} = props;
 
     return <GoogleMapReact
         className={classNames(className)}
-        bootstrapURLKeys={{ key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I' }}
+        bootstrapURLKeys={{key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I'}}
         {...otherProps}
     >
-        {alerts && alerts.map((a:Alert) => (
+        {alerts && alerts.map((a: Alert) => (
             <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={alert[a.type].color || 'orange'}>
                 <Icon className='marker-icon' icon={alert[a.type].icon}/>
             </Marker>

@@ -57,14 +57,14 @@ type AllProps = AlertProps & HTMLProps<HTMLLIElement>;
 
 const AlertView: React.FC<AllProps> = (props: AllProps) => {
     const incidents: Incident[] = [
-        { id: 'tim-test1', title: '167 Blackfriars Rd', type: 'Hazerd | Flooding'},
-        { id: 'tim-test2', title: '167 Blackfriars Rd', type: 'Accident'},
-        { id: 'tim-test3', title: '167 Blackfriars Rd', type: 'Collision'}
+        {id: 'tim-test1', title: '167 Blackfriars Rd', type: 'Hazerd | Flooding'},
+        {id: 'tim-test2', title: '167 Blackfriars Rd', type: 'Accident'},
+        {id: 'tim-test3', title: '167 Blackfriars Rd', type: 'Collision'}
     ];
     const cctv: CCTV[] = [
-        { id: 'cctv-test1', title: '167 Blackfriars Rd', type: 'Borough'},
-        { id: 'cctv-test2', title: '167 Blackfriars Rd', type: 'Police'},
-        { id: 'cctv-test3', title: '167 Blackfriars Rd', type: 'TFL'}
+        {id: 'cctv-test1', title: '167 Blackfriars Rd', type: 'Borough'},
+        {id: 'cctv-test2', title: '167 Blackfriars Rd', type: 'Police'},
+        {id: 'cctv-test3', title: '167 Blackfriars Rd', type: 'TFL'}
     ];
 
     const {title, text, time, area, completed, open, className, toggle, ...otherProps} = props;
@@ -85,27 +85,27 @@ const AlertView: React.FC<AllProps> = (props: AllProps) => {
                 <details>
                     <summary>CCTV</summary>
                     <ul className={'cctv-list'}>
-                    {cctv.map((item: CCTV) => (
-                        <li className={'cctv'}>
-                            <div className={'cctv-id'}>{item.id}</div>
-                            <div className={'cctv-location'}>{item.title}</div>
-                            <div className={'cctv-type'}>{item.type}</div>
-                        </li>
-                    ))}
+                        {cctv.map((item: CCTV) => (
+                            <li className={'cctv'}>
+                                <div className={'cctv-id'}>{item.id}</div>
+                                <div className={'cctv-location'}>{item.title}</div>
+                                <div className={'cctv-type'}>{item.type}</div>
+                            </li>
+                        ))}
                     </ul>
                 </details>
                 <details>
                     <summary>TIMS</summary>
                     <ul className={'incident-list'}>
-                    {
-                        incidents.map((item: Incident) => (
-                            <li className={'incident'}>
-                                <div className={'incident-id'}>{item.id}</div>
-                                <div className={'incident-location'}>{item.title}</div>
-                                <div className={'incident-type'}>{item.type}</div>
-                            </li>
-                        ))
-                    }
+                        {
+                            incidents.map((item: Incident) => (
+                                <li className={'incident'}>
+                                    <div className={'incident-id'}>{item.id}</div>
+                                    <div className={'incident-location'}>{item.title}</div>
+                                    <div className={'incident-type'}>{item.type}</div>
+                                </li>
+                            ))
+                        }
                     </ul>
                 </details>
             </div>

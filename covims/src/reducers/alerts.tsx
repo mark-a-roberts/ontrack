@@ -1,5 +1,5 @@
 import {Alert} from "../data/alert";
-import {mockAlert} from './alerts.mock';
+import {mockAlert} from './mock/alerts.mock';
 
 const initialState: Array<Alert> = Array.from({length: 1000}, () => mockAlert());
 

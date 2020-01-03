@@ -101,7 +101,7 @@ class Alerts extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState>
                 </span>
                 {alertTitle}
             </h3>
-            <AlertList alerts={alerts} />
+            <AlertList alerts={alerts}/>
         </SidePanel>
     }
 }

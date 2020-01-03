@@ -1,7 +1,7 @@
 import {CCTV} from "../data/cctv";
-import {mockCCTV} from './cctv.mock';
+import {cctvList} from './mock/cctv.mock';
 
-const initialState: Array<CCTV> = Array.from({length: 1000}, () => mockCCTV());
+const initialState: Array<CCTV> = cctvList();
 
 class ActionType {
     id!: string;
@@ -20,7 +20,7 @@ export function cctvReducer(state = initialState, action: ActionType): Array<CCT
                 }];
         case 'DELETE':
             return state.filter(
-                incident => incident.id !== action.payload.id
+                item => item.id !== action.payload.id
             );
         default:
             return state;

@@ -1,5 +1,5 @@
 import {Incident} from "../data/incident";
-import {mockIncident} from './incident.mock';
+import {mockIncident} from './mock/incident.mock';
 
 const initialState: Array<Incident> = Array.from({length: 1000}, () => mockIncident());
 

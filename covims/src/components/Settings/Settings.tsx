@@ -22,12 +22,12 @@ interface IState {
  */
 const mapState = (state: any) => {
     return {
-        areas:  state.areas,
+        areas: state.areas,
     }
 };
 
 const mapDispatch = {
-    areaToggle: (index:string) => (areaToggle(index))
+    areaToggle: (index: string) => (areaToggle(index))
 };
 
 class Settings extends React.Component<IProps, IState> {
@@ -55,7 +55,7 @@ class Settings extends React.Component<IProps, IState> {
                         return <div key={a.key}>
                             <label>
                                 <span className="areaName">{a.name}</span>
-                                <Switch id={a.key} onChange={this.handleChange} checked={check} />
+                                <Switch id={a.key} onChange={this.handleChange} checked={check}/>
                             </label>
                         </div>
                     }

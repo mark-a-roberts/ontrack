@@ -5,7 +5,7 @@ export interface Incident {
     text?: string;
     time?: Date;
     lat?: number;
-    lng?:number;
+    lng?: number;
     completed?: boolean;
 }
 
@@ -38,4 +38,4 @@ const incidentTypes: IncidentInstance = {
 
 const incidentKeys = Object.keys(incidentTypes);
 
-export { incidentTypes, incidentKeys }
+export {incidentTypes, incidentKeys}

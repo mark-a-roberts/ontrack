@@ -1,4 +1,5 @@
-import {CCTV, cctvTypes, cctvKeys} from "../data/cctv";
+import {CCTV, cctvTypes, cctvKeys} from "../../data/cctv";
+import cameras from './jamcam.json';
 
 const randomCCTV = () => {
     return cctvKeys[cctvKeys.length * Math.random() << 0];
@@ -18,4 +19,18 @@ export const mockCCTV = (): CCTV => {
         text: 'some text',
         ...position
     }
+};
+
+export const cctvList = (): CCTV[] => {
+    return cameras.map(
+        (camera: any) => {
+            return {
+                id: camera.id,
+                title: camera.commonName,
+                type: camera.placeType,
+                lat: camera.lat,
+                lng: camera.lon,
+            }
+        }
+    )
 };

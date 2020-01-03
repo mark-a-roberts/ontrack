@@ -6,7 +6,7 @@ export interface Alert {
     text: string;
     time: Date;
     lat?: number;
-    lng?:number;
+    lng?: number;
     completed: boolean;
 }
 
@@ -40,4 +40,4 @@ const alertTypes: AlertType = {
 
 const alertKeys = Object.keys(alertTypes);
 
-export { alertTypes, alertKeys }
+export {alertTypes, alertKeys}

@@ -23,7 +23,7 @@ class EsriMap extends React.Component<AllProps, AllState> {
     }
 
     mapLoad(map: any, view: any) {
-        this.setState({ map, view });
+        this.setState({map, view});
     }
 
     render() {
@@ -32,7 +32,7 @@ class EsriMap extends React.Component<AllProps, AllState> {
         return <Map
             className={classNames(className)}
             // id={'7be6d1f81ab047fda02107a97079ccd3'}
-            mapProperties={{ basemap: 'gray' }}
+            mapProperties={{basemap: 'gray'}}
             viewProperties={{
                 center: [-0.1, 51.5],
                 zoom: 10

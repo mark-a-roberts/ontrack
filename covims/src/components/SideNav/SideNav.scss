@@ -1,48 +1,46 @@
 @import 'src/assets/styles/colors';
 
 .sidenav {
-    z-index: 100;
-    width: 109px;
-    height: 100vh;
-    background: $ims-blueberry;
-    box-shadow: 4px 0 10px 0 rgba(53, 58, 140, 0.3);
-    &-logo {
-        background: white;
-        color: $ims-blueberry;
+  z-index: 100;
+  width: 109px;
+  height: 100vh;
+  background: $ims-blueberry;
+  box-shadow: 4px 0 10px 0 rgba(53, 58, 140, 0.3);
 
-        & img {
-            width: 70px;
-            padding: 15px;
-        }
-    }
+  &-logo {
+    background: white;
+    color: $ims-blueberry;
 
-    &-button {
-        box-sizing: border-box;
-        width: 100%;
-        min-height: 109px;
-        padding: 25px;
-        color: $ims-white;
-        fill: $ims-white;
-        stroke: $ims-white;
-        text-decoration: none;
-        text-align: center;
-        display: block;
+    & img {
+      width: 70px;
+      padding: 15px;
     }
+  }
 
-    .selected {
-        background-color: $ims-seafoam-blue;
-    }
+  &-button {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 109px;
+    padding: 25px;
+    color: $ims-white;
+    fill: $ims-white;
+    stroke: $ims-white;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+  }
+
+  .selected {
+    background-color: $ims-seafoam-blue;
+  }
 }
-
-
-
 
 
 .areaName {
-    display: inline-block;
-    width: 150px;
+  display: inline-block;
+  width: 150px;
 }
 
 .white {
-    background: $corporate-white;
+  background: $corporate-white;
 }

@@ -16,7 +16,7 @@ interface IState {
 type AllProps = AlertListProps & HTMLProps<HTMLUListElement>
 
 class AlertList extends React.Component<AllProps, IState> {
-    constructor(props:AllProps) {
+    constructor(props: AllProps) {
         super(props);
         this.state = {
             openItem: ''

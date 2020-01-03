@@ -4,7 +4,7 @@ export interface CCTV {
     title: string;
     text?: string;
     lat?: number;
-    lng?:number;
+    lng?: number;
 }
 
 type CCTVInstance = {
@@ -37,4 +37,4 @@ const cctvTypes: CCTVInstance = {
 
 const cctvKeys = Object.keys(cctvTypes);
 
-export { cctvTypes, cctvKeys }
+export {cctvTypes, cctvKeys}
