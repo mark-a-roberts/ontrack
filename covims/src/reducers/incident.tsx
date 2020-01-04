@@ -1,7 +1,7 @@
 import {Incident} from "../data/incident";
-import {mockIncident} from './mock/incident.mock';
+import {incidentList} from './mock/incident.mock';
 
-const initialState: Array<Incident> = Array.from({length: 1000}, () => mockIncident());
+const initialState: Array<Incident> = incidentList();
 
 class ActionType {
     id!: string;

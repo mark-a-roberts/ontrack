@@ -2,9 +2,6 @@ import React, {ChangeEvent, HTMLProps} from 'react';
 import {connect, ConnectedProps} from "react-redux";
 import classNames from "classnames";
 
-import {filteredAlerts} from "../../reducers/alerts";
-import {filterToggle} from "../../actions";
-
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome";
 import {
     faCarCrash,
@@ -14,6 +11,11 @@ import {
     faTrafficLight,
     faTruckPickup
 } from "@fortawesome/free-solid-svg-icons";
+
+import {capitalize} from "../../data/helpers";
+import {filteredAlerts} from "../../reducers/alerts";
+import {filterToggle} from "../../actions";
+
 import SidePanel from "../SidePanel";
 import AlertList from "../AlertList";
 
@@ -31,21 +33,20 @@ function FilterButton(props: any) {
     </button>
 }
 
-interface IProps {
+interface ViewProps {
     alerts?: object[]
     filter: string[]
     areas?: string[]
     filterToggle: any
 }
 
-interface IState {
+interface ViewState {
 }
 
-type MyProps = PropsFromRedux & IProps ;
+type AllProps = ViewProps &  HTMLProps<HTMLDivElement>;
 
-const capitalize = (str: string) => (str.charAt(0).toUpperCase() + str.slice(1));
 
-class Alerts extends React.Component<IProps & HTMLProps<HTMLDivElement>, IState> {
+class Alerts extends React.Component<AllProps, ViewState> {
 
     doChange = (e: ChangeEvent) => {
         e.persist();
@@ -119,10 +120,8 @@ const mapDispatch = {
     filterToggle: (index: string) => (filterToggle(index))
 };
 
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-type MyOption = { label: string, value: number }
-
 const connector = connect(mapState, mapDispatch)(Alerts);
+
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 export default connector;

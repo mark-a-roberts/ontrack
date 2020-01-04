@@ -1,128 +1,128 @@
 import React, {HTMLProps, MouseEvent} from 'react';
+import {connect} from "react-redux";
 import classNames from "classnames";
 
 import './Alert.scss';
 
 import {Incident} from "../../data/incident";
 import {CCTV} from "../../data/cctv";
+import {Alert} from "../../data/alert";
+import {timeDifference} from "../../data/helpers";
 
 /*
     Alert
  */
 
 interface AlertProps {
-    title?: string;
-    text?: string;
-    /** Area of Alert */
-    area?: string;
-    /** Time of Alert */
-    time?: Date,
-    completed: boolean
-    toggle: (e: MouseEvent<HTMLElement>) => void
+    alertId: string,
+    alert: Alert,
+    toggle: (e: MouseEvent<HTMLElement>) => void;
+    incidents: Incident[];
+    cctv:CCTV[];
 }
 
-const SEC = 1000;
-const MIN = 60 * SEC;
-const HOUR = 60 * MIN;
-
-function timeDifference(t1: Date, t2: Date): string {
-    const timeDiff = t1.getTime() - t2.getTime();
-    let ds = '';
-    if (timeDiff < HOUR) {
-        let min = Math.floor(timeDiff / MIN);
-        ds = (min !== 0) ? min + ' mins ago' :
-            Math.floor(timeDiff / SEC) + ' secs ago';
-    } else {
-        const today = t1.toDateString();
-        let y: Date = new Date(t1);
-        y.setDate(t1.getDate() - 1);
-        const yesterday = y.toDateString();
-        console.log('Today:' + today + ' Yesterday:' + yesterday);
-        if (today === t2.toDateString()) {
-            // today
-            ds = 'Today';
-        } else if (yesterday === t2.toDateString()) {
-            // yesterday
-            ds = 'Yesterday'
-        } else {
-            ds = t2.toLocaleDateString('en', {'month': 'short', 'day': 'numeric'});
-        }
-        ds += ' ' + t2.toLocaleTimeString('en', {'hour12': false, 'hour': '2-digit', 'minute': '2-digit'});
-    }
-    return ds;
-
+interface IState {
 }
 
 type AllProps = AlertProps & HTMLProps<HTMLLIElement>;
 
-const AlertView: React.FC<AllProps> = (props: AllProps) => {
-    const incidents: Incident[] = [
-        {id: 'tim-test1', title: '167 Blackfriars Rd', type: 'Hazerd | Flooding'},
-        {id: 'tim-test2', title: '167 Blackfriars Rd', type: 'Accident'},
-        {id: 'tim-test3', title: '167 Blackfriars Rd', type: 'Collision'}
-    ];
-    const cctv: CCTV[] = [
-        {id: 'cctv-test1', title: '167 Blackfriars Rd', type: 'Borough'},
-        {id: 'cctv-test2', title: '167 Blackfriars Rd', type: 'Police'},
-        {id: 'cctv-test3', title: '167 Blackfriars Rd', type: 'TFL'}
-    ];
-
-    const {title, text, time, area, completed, open, className, toggle, ...otherProps} = props;
-    const now = new Date();
-    const aClass = 'alert' + (completed ? '' : ' alert--new');
-    const viewTime = time ? timeDifference(now, time) : '---';
-    return open ?
-        <li className={classNames(aClass, 'alert--open', className)} {...otherProps}>
-            <h2>{title} <span className="alert-close" onClick={toggle}>X</span></h2>
-            <p>{text}</p>
-            <p>{viewTime}</p>
-            <div><h5>What would you like to do to this alert?</h5>
-                <button type='button' className='button primary'>Convert into an incident</button>
-                <button type='button' className='button primary'>Dismiss alert</button>
-            </div>
-            <div>
-                <h5>Related information</h5>
-                <details>
-                    <summary>CCTV</summary>
-                    <ul className={'cctv-list'}>
-                        {cctv.map((item: CCTV) => (
-                            <li className={'cctv'}>
-                                <div className={'cctv-id'}>{item.id}</div>
-                                <div className={'cctv-location'}>{item.title}</div>
-                                <div className={'cctv-type'}>{item.type}</div>
-                            </li>
-                        ))}
-                    </ul>
-                </details>
-                <details>
-                    <summary>TIMS</summary>
-                    <ul className={'incident-list'}>
-                        {
-                            incidents.map((item: Incident) => (
-                                <li className={'incident'}>
-                                    <div className={'incident-id'}>{item.id}</div>
-                                    <div className={'incident-location'}>{item.title}</div>
-                                    <div className={'incident-type'}>{item.type}</div>
-                                </li>
-                            ))
+class AlertView extends React.Component<AllProps, IState> {
+    render() {
+        const {alertId, alert, cctv, incidents, open, className, toggle,  ...otherProps} = this.props;
+        const {title, text, completed, time, area} = {...alert};
+        const now = new Date();
+        const aClass = 'alert' + (completed ? '' : ' alert--new');
+        const viewTime = time ? timeDifference(now, time) : '---';
+        const attr = {
+            id: 'alert-' + alertId,
+            'data-id': alertId
+        }
+        return open ?
+            <li className={classNames(aClass, 'alert--open', className)} {...attr} {...otherProps}>
+                <h2>{title} <span className="alert-close" onClick={toggle}>X</span></h2>
+                <p>{text}</p>
+                <p>{viewTime}</p>
+                <div><h5>What would you like to do to this alert?</h5>
+                    <button type='button' className='button primary'>Convert into an incident</button>
+                    <button type='button' className='button primary'>Dismiss alert</button>
+                </div>
+                <div>
+                    <h5>Related information</h5>
+                    <details>
+                        <summary>CCTV</summary>
+                        {cctv ?
+                            <ul className={'cctv-list'}>
+                                {cctv.map((item: CCTV) => (
+                                    <li className={'cctv'}>
+                                        <div className={'cctv-id'}>{item.id}</div>
+                                        <div className={'cctv-location'}>{item.commonName}</div>
+                                        <div className={'cctv-type'}>{item.placeType}</div>
+                                    </li>
+                                ))}
+                            </ul>
+                            :
+                            <p>No CCTV Available</p>
                         }
-                    </ul>
-                </details>
-            </div>
-        </li> :
-        <li className={classNames(aClass, className)} onClick={toggle} {...otherProps}>
-            <div className='oval alert-area'>
-                {(area && area.charAt(0).toUpperCase()) || '-'}
-            </div>
-            <div className='alert-info'>
-                <h4 className='alert-category'>{title}</h4>
-                <div className='alert-location'>{text}</div>
-            </div>
-            <div className='alert-time'>
-                {viewTime}
-            </div>
+                    </details>
+                    <details>
+                        <summary>TIMS</summary>
+                        {incidents ?
+                            <ul className={'incident-list'}>
+                                {
+                                    incidents.map((item: Incident) => (
+                                        <li className={'incident'}>
+                                            <div className={'incident-id'}>{item.id}</div>
+                                            <div className={'incident-location'}>{item.location}</div>
+                                            <div
+                                                className={'incident-category'}>{item.category}|{item.subCategory}</div>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                            :
+                            <p>No Incidents</p>
+                        }
+                    </details>
+                </div>
+            </li> :
+            <li className={classNames(aClass, className)} onClick={toggle} {...attr} {...otherProps}>
+                <div className='oval alert-area'>
+                    {(area && area.charAt(0).toUpperCase()) || '-'}
+                </div>
+                <div className='alert-info'>
+                    <h4 className='alert-category'>{title}</h4>
+                    <div className='alert-location'>{text}</div>
+                </div>
+                <div className='alert-time'>
+                    {viewTime}
+                </div>
+            </li>;
+    }
+}
 
-        </li>;
+const nearIncidents = ( incidents: Incident[], lat: number, lon: number, limit: number) => {
+        const result = incidents.filter( (item: Incident) => ((item.lat - lat) + (item.lon-lon) < 0.5 ));
+        return result.slice(0,limit);
+    };
+
+    const nearCCTV = ( cctv: CCTV[], lat:number, lon:number, limit:number) => {
+        const result = cctv.filter( (c : CCTV) => ((c.lat - lat) + (c.lon-lon) < 0.5 ));
+        return result.slice(0,limit);
+    };
+
+    const mapState = (state: any, ownProps:any) => {
+
+        if (ownProps.alertId) {
+            const alert = state.alerts.find((a :Alert) => (a.id === ownProps.alertId));
+            const cctv = nearCCTV( state.cctv, alert.lat, alert.lng, 3);
+            const incidents = nearIncidents(state.incidents, alert.lat, alert.lng, 3);
+
+            return {
+                alert,
+                cctv,
+                incidents
+            }
+        }
 };
 
-export default AlertView;
+export default connect(mapState)(AlertView);
