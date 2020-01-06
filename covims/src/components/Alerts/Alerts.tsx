@@ -36,7 +36,7 @@ function FilterButton(props: any) {
 interface ViewProps {
     alerts?: object[]
     filter: string[]
-    areas?: string[]
+    areas?: string[],
     filterToggle: any
 }
 
@@ -51,7 +51,7 @@ class Alerts extends React.Component<AllProps, ViewState> {
     doChange = (e: ChangeEvent) => {
         e.persist();
         console.log(e)
-    }
+    };
 
     render() {
         const {areas, alerts, filter, filterToggle, className} = this.props;

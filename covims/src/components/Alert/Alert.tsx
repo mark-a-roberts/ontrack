@@ -1,5 +1,5 @@
 import React, {HTMLProps, MouseEvent} from 'react';
-import {connect} from "react-redux";
+import {connect, ConnectedProps} from "react-redux";
 import classNames from "classnames";
 
 import './Alert.scss';
@@ -7,28 +7,58 @@ import './Alert.scss';
 import {Incident} from "../../data/incident";
 import {CCTV} from "../../data/cctv";
 import {Alert} from "../../data/alert";
-import {timeDifference} from "../../data/helpers";
+import {timeDifference, close} from "../../data/helpers";
+
+/* Redux Connect */
+
+const nearIncidents = (incidents: Incident[], lat: number, lon: number, limit: number) => {
+    const result = incidents.filter((item: Incident) => (close(item, lat, lon) < 0.5));
+    return result.slice(0, limit);
+};
+
+const nearCCTV = (cctv: CCTV[], lat: number, lon: number, limit: number) => {
+    const result = cctv.filter((item: CCTV) => (close(item, lat, lon) < 0.5));
+    return result.slice(0, limit);
+};
+
+const mapState = (state: any, ownProps: any) => {
+
+    const alert: Alert = state.alerts.find((a: Alert) => (a.id === ownProps.alertId));
+    const cctv = nearCCTV(state.cctv, alert.lat, alert.lng, 3);
+    const incidents = nearIncidents(state.incidents, alert.lat, alert.lng, 3);
+
+    return {
+        alert,
+        cctv,
+        incidents
+    }
+};
+
+let connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 /*
     Alert
  */
+
 
 interface AlertProps {
     alertId: string,
     alert: Alert,
     toggle: (e: MouseEvent<HTMLElement>) => void;
     incidents: Incident[];
-    cctv:CCTV[];
+    cctv: CCTV[];
 }
 
 interface IState {
 }
 
-type AllProps = AlertProps & HTMLProps<HTMLLIElement>;
+type AllProps = AlertProps & HTMLProps<HTMLLIElement> & PropsFromRedux;
 
 class AlertView extends React.Component<AllProps, IState> {
     render() {
-        const {alertId, alert, cctv, incidents, open, className, toggle,  ...otherProps} = this.props;
+        const {alertId, alert, cctv, incidents, open, className, toggle, dispatch, ...otherProps} = this.props;
         const {title, text, completed, time, area} = {...alert};
         const now = new Date();
         const aClass = 'alert' + (completed ? '' : ' alert--new');
@@ -36,7 +66,7 @@ class AlertView extends React.Component<AllProps, IState> {
         const attr = {
             id: 'alert-' + alertId,
             'data-id': alertId
-        }
+        };
         return open ?
             <li className={classNames(aClass, 'alert--open', className)} {...attr} {...otherProps}>
                 <h2>{title} <span className="alert-close" onClick={toggle}>X</span></h2>
@@ -53,7 +83,7 @@ class AlertView extends React.Component<AllProps, IState> {
                         {cctv ?
                             <ul className={'cctv-list'}>
                                 {cctv.map((item: CCTV) => (
-                                    <li className={'cctv'}>
+                                    <li key={item.id} className={'cctv'}>
                                         <div className={'cctv-id'}>{item.id}</div>
                                         <div className={'cctv-location'}>{item.commonName}</div>
                                         <div className={'cctv-type'}>{item.placeType}</div>
@@ -70,7 +100,7 @@ class AlertView extends React.Component<AllProps, IState> {
                             <ul className={'incident-list'}>
                                 {
                                     incidents.map((item: Incident) => (
-                                        <li className={'incident'}>
+                                        <li key={item.id} className={'incident'}>
                                             <div className={'incident-id'}>{item.id}</div>
                                             <div className={'incident-location'}>{item.location}</div>
                                             <div
@@ -100,29 +130,4 @@ class AlertView extends React.Component<AllProps, IState> {
     }
 }
 
-const nearIncidents = ( incidents: Incident[], lat: number, lon: number, limit: number) => {
-        const result = incidents.filter( (item: Incident) => ((item.lat - lat) + (item.lon-lon) < 0.5 ));
-        return result.slice(0,limit);
-    };
-
-    const nearCCTV = ( cctv: CCTV[], lat:number, lon:number, limit:number) => {
-        const result = cctv.filter( (c : CCTV) => ((c.lat - lat) + (c.lon-lon) < 0.5 ));
-        return result.slice(0,limit);
-    };
-
-    const mapState = (state: any, ownProps:any) => {
-
-        if (ownProps.alertId) {
-            const alert = state.alerts.find((a :Alert) => (a.id === ownProps.alertId));
-            const cctv = nearCCTV( state.cctv, alert.lat, alert.lng, 3);
-            const incidents = nearIncidents(state.incidents, alert.lat, alert.lng, 3);
-
-            return {
-                alert,
-                cctv,
-                incidents
-            }
-        }
-};
-
-export default connect(mapState)(AlertView);
+export default connector(AlertView);

@@ -5,8 +5,8 @@ export interface Alert {
     title: string;
     text: string;
     time: Date;
-    lat?: number;
-    lng?: number;
+    lat: number;
+    lng: number;
     completed: boolean;
 }
 
@@ -15,7 +15,6 @@ export type AlertType = {
         name: string;
     }
 };
-
 
 const alertTypes: AlertType = {
     broken: {

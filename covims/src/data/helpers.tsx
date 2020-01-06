@@ -4,6 +4,13 @@ const HOUR = 60 * MIN;
 
 export const capitalize = (str: string) => (str.charAt(0).toUpperCase() + str.slice(1));
 
+interface CloseItem {
+    lat: number,
+    lon: number
+}
+
+export const close = (item: CloseItem, lat: number, lon: number) => Math.pow(item.lat - lat, 2) + Math.pow(item.lon - lon, 2);
+
 export const timeDifference = (t1: Date, t2: Date): string => {
     const timeDiff = t1.getTime() - t2.getTime();
     let ds = '';

@@ -43,6 +43,6 @@ class EsriMap extends React.Component<AllProps, AllState> {
         </Map>
     }
 
-};
+}
 
 export default EsriMap;
