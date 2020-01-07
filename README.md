@@ -1,4 +1,4 @@
-# Incident Managemnment System Prototype
+# Incident Management System Prototype
 
 This is a prototype of application to handle and display WAZE alerts for the London Are. It uses:
 
