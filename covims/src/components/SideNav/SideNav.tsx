@@ -12,13 +12,17 @@ import {faBell} from '@fortawesome/free-regular-svg-icons'
 
 import './SideNav.scss';
 
-interface IProps {
+interface SideNavProps {
 }
 
-const SideNav: React.FC<IProps> = (props) => {
+type Props = SideNavProps
+
+const SideNav: React.FC<Props> = (props: Props) => {
+
+    const { ...other} = props;
 
     return (
-        <div className='flex'>
+        <div className='flex' {...other}>
             <div className='sidenav'>
                 <div className='sidenav-logo'>
                     <img src={logo} alt='tfl'/>

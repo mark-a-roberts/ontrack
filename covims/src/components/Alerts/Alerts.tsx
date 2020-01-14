@@ -12,7 +12,6 @@ import {
     faTruckPickup
 } from "@fortawesome/free-solid-svg-icons";
 
-import {capitalize} from "../../data/helpers";
 import {filteredAlerts} from "../../reducers/alerts";
 import {filterToggle} from "../../actions";
 
@@ -20,6 +19,7 @@ import SidePanel from "../SidePanel";
 import AlertList from "../AlertList";
 
 import './Alerts.scss';
+import {Area} from "../../data/area";
 
 function FilterButton(props: any) {
     let selected = props.filter.indexOf(props.id);
@@ -33,20 +33,35 @@ function FilterButton(props: any) {
     </button>
 }
 
+
+
 interface ViewProps {
-    alerts?: object[]
-    filter: string[]
-    areas?: string[],
     filterToggle: any
 }
 
 interface ViewState {
 }
 
-type AllProps = ViewProps &  HTMLProps<HTMLDivElement>;
+const mapState = (state: any) => {
+    return {
+        areas: state.areas,
+        alerts: filteredAlerts(state.alerts, state.filter, state.areas),
+        filter: state.filter,
+    }
+};
 
+const mapDispatch = {
+    filterToggle: (index: string) => (filterToggle(index))
+};
 
-class Alerts extends React.Component<AllProps, ViewState> {
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+type Props = ViewProps & PropsFromRedux & HTMLProps<HTMLDivElement>;
+type State = ViewState;
+
+class Alerts extends React.Component<Props, State> {
 
     doChange = (e: ChangeEvent) => {
         e.persist();
@@ -59,7 +74,7 @@ class Alerts extends React.Component<AllProps, ViewState> {
             alerts.length + (alerts.length > 1 ? ' Alerts' : ' Alert') : 'No Alerts';
 
         return <SidePanel className={classNames('alerts', className)}>
-            <h1>Alerts <span className='alerts-areas'>{areas ? areas.map((a) => capitalize(a)).join(', ') : ''}</span>
+            <h1>Alerts <span className='alerts-areas'>{ areas ? areas.map( (a:Area) => (a.name)).join(', ') : ''}</span>
             </h1>
             <div className='well'>
                 <h3>Filters</h3>
@@ -108,20 +123,6 @@ class Alerts extends React.Component<AllProps, ViewState> {
 }
 
 
-const mapState = (state: any) => {
-    return {
-        areas: state.areas,
-        alerts: filteredAlerts(state.alerts, state.filter, state.areas),
-        filter: state.filter,
-    }
-};
 
-const mapDispatch = {
-    filterToggle: (index: string) => (filterToggle(index))
-};
 
-const connector = connect(mapState, mapDispatch)(Alerts);
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-export default connector;
+export default connector(Alerts);

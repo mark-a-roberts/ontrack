@@ -51,12 +51,12 @@ interface AlertProps {
     cctv: CCTV[];
 }
 
-interface IState {
+interface State {
 }
 
-type AllProps = AlertProps & HTMLProps<HTMLLIElement> & PropsFromRedux;
+type Props = AlertProps & HTMLProps<HTMLLIElement> & PropsFromRedux;
 
-class AlertView extends React.Component<AllProps, IState> {
+class AlertView extends React.Component<Props, State> {
     render() {
         const {alertId, alert, cctv, incidents, open, className, toggle, dispatch, ...otherProps} = this.props;
         const {title, text, completed, time, area} = {...alert};

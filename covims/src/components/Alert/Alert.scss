@@ -80,7 +80,6 @@
       box-shadow: 2px 2px 4px 0 rgba(53, 58, 140, 0.3);
       border: solid 1px var(--blueberry);
       background-color: var(--white);
-      padding: 15px;
     }
 
     summary {
@@ -93,6 +92,7 @@
       letter-spacing: normal;
       color: var(--blueberry);
       height: 35px;
+      padding: 15px 0 0 10px;
     }
   }
 

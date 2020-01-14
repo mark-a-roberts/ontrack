@@ -6,8 +6,8 @@ export const incidentList = (): Incident[] => {
         (incident: any) => {
             const point = JSON.parse(incident.point);
             return {
-                lat: point[0],
-                lon: point[1],
+                lat: point[1],
+                lon: point[0],
                 ...incident
             }
         }

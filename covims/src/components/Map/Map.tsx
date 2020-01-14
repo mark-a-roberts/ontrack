@@ -2,6 +2,7 @@ import React from 'react';
 import GoogleMapReact from "google-map-react";
 import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome";
 import {
+    IconDefinition,
     faCarCrash,
     faCarSide,
     faSmog,
@@ -21,10 +22,10 @@ import {CCTV} from "../../data/cctv";
 
 interface AlertMap {
     color: string;
-    icon: string;
+    icon: IconDefinition;
 }
 
-const alert: any = {
+const alert: { [key: string]: AlertMap }  = {
     broken: {color: 'white', icon: faTruckPickup},
     hazard: {color: 'white', icon: faSmog},
     collision: {color: 'white', icon: faCarCrash},
@@ -39,12 +40,14 @@ interface MapProps {
     incidents?: Incident[]
 }
 
-const Map = (props: MapProps & any ) => {
-    const {alerts, cctv, incidents, className, draggable, ...otherProps} = props;
+type Props = MapProps & any
+
+const Map = (props: Props ) => {
+    const {alerts, cctv, incidents, className, draggable, ...other} = props;
 
     return <GoogleMapReact className={classNames(className)}
         bootstrapURLKeys={{key: 'AIzaSyCTQDk2x-ZzaBAGcLKsY5TQPM08G_o6x2I'}}
-        {...otherProps}
+        {...other}
     >
         {alerts && alerts.map((a: Alert) => (
             <Marker key={a.id} lat={a.lat} lng={a.lng} name={a.title} color={alert[a.type].color || 'orange'}>

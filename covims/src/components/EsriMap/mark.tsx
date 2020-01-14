@@ -9,7 +9,9 @@ interface MarkerProps {
     lng: number | undefined
 }
 
-const Marker: React.FC<MarkerProps & HTMLProps<HTMLDivElement>> = (props: any) => {
+type Props = MarkerProps & HTMLProps<HTMLDivElement>
+
+const Marker: React.FC<Props> = (props: Props) => {
     const {color, name, id, children} = props;
     return (
         <div className="marker" id={id}

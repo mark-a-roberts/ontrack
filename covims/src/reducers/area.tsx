@@ -1,45 +1,17 @@
-import {AREA_OFF, AREA_ON, AREA_TOGGLE, AreaAction} from "../actions";
+import {Area} from "../data/area";
+import {AREA_UPDATE, AREA_TOGGLE, initialAreas, AreaToggle, AreaUpdate} from "../actions";
 
-export interface IArea {
-    [index: number]: string
-}
+const initialState: Area[] = initialAreas;
 
-const initialState: IArea = [];
-
-export function areaReducer(state: IArea = initialState, action: AreaAction): IArea {
+export function areaReducer(state: Area[] = initialState, action: AreaUpdate | AreaToggle): Area[] {
     // When the app loads this would check for the state, which is undefined, so set it to null in the argument.
-    let index: number, newState: Array<string>;
+    let newState: Area[];
     switch (action.type) {
+        case AREA_UPDATE:
+            newState = state.map( (a) => a.key === action.payload.key ? action.payload: a);
+            return newState;
         case AREA_TOGGLE:
-            // @ts-ignore
-            newState = [...state];
-            index = newState.indexOf(action.payload);
-
-            if (index === -1) {
-                newState.push(action.payload)
-            } else {
-                newState.splice(index, 1);
-            }
-            return newState;
-        case AREA_ON:
-            // @ts-ignore
-            newState = [...state];
-            index = newState.indexOf(action.payload);
-
-            if (index === -1) {
-                newState.push(action.payload)
-            } else {
-                newState.splice(index, 1);
-            }
-            return newState;
-        case AREA_OFF:
-            // @ts-ignore
-            newState = [...state];
-            index = newState.indexOf(action.payload);
-
-            if (index !== -1) {
-                newState.splice(index, 1);
-            }
+            newState = state.map( (a) => (a.key === action.payload ? {...a, value: !a.value }: a));
             return newState;
         default:
             return state;

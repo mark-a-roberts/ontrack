@@ -3,20 +3,21 @@ import classNames from "classnames";
 
 import Alert from '../Alert';
 
+import '../../actions'
 import './AlertList.scss';
 
 interface AlertListProps {
     alerts?: object[]
 }
 
-interface IState {
+interface State {
     openItem: any;
 }
 
-type AllProps = AlertListProps & HTMLProps<HTMLUListElement>
+type Props = AlertListProps & HTMLProps<HTMLUListElement>
 
-class AlertList extends React.Component<AllProps, IState> {
-    constructor(props: AllProps) {
+class AlertList extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             openItem: ''
@@ -28,6 +29,7 @@ class AlertList extends React.Component<AllProps, IState> {
         e.preventDefault();
         const openId = e.currentTarget.getAttribute('data-id');
         const openItem = (openId === this.state.openItem) ? '' : openId;
+
         this.setState({openItem});
     };
 

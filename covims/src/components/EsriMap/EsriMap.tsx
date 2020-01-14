@@ -4,16 +4,17 @@ import {Map} from '@esri/react-arcgis';
 import classNames from "classnames";
 import {Alert} from "../../data/alert";
 
-type AllProps = {
+type EsriProps = {
     alerts?: Alert[]
-    className?: string
 }
 
-type AllState = {}
+type Props = EsriProps & any
 
-class EsriMap extends React.Component<AllProps, AllState> {
+type State = {}
 
-    constructor(props: AllProps) {
+class EsriMap extends React.Component<Props, State> {
+
+    constructor(props: Props) {
         super(props);
         this.state = {
             map: null,
@@ -27,7 +28,7 @@ class EsriMap extends React.Component<AllProps, AllState> {
     }
 
     render() {
-        const {alerts, className, ...otherProps} = this.props;
+        const {alerts, className, ...other} = this.props;
 
         return <Map
             className={classNames(className)}
@@ -38,7 +39,7 @@ class EsriMap extends React.Component<AllProps, AllState> {
                 zoom: 10
             }}
             onLoad={this.mapLoad}
-            {...otherProps}
+            {...other}
         >
         </Map>
     }

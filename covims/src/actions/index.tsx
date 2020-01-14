@@ -1,3 +1,5 @@
+import {Area} from '../data/area';
+
 /*
     Alert Filters
 */
@@ -40,49 +42,43 @@ export function filterToggle(filter: string): FilterActionTypes {
 /*
     Area Filters
  */
-export const AREA_ON  = 'AREA_ON';
-export const AREA_OFF  = 'AREA_OFF';
+export const AREA_UPDATE  = 'AREA_UPDATE';
 export const AREA_TOGGLE  = 'AREA_TOGGLE';
 
-interface IArea {
-    key: string,
-    name: string
-}
 
-export const areas: IArea[] = [
+export const initialAreas: Area[] = [
     { key: 'north', name: 'North'},
     { key: 'east', name: 'East'},
     { key: 'south', name: 'South'},
     { key: 'central', name: 'Central'}
 ];
 
-export type AREA_ACTION = typeof AREA_ON | typeof AREA_OFF | typeof AREA_TOGGLE;
+export type AREA_ACTION = typeof AREA_UPDATE | typeof AREA_TOGGLE;
 
-export interface AreaAction {
-    type: AREA_ACTION
+export interface AreaToggle {
+    type: typeof AREA_TOGGLE
     payload: string
 }
 
-export function areaToggle(area: string): AreaAction {
+export interface AreaUpdate {
+    type: typeof AREA_UPDATE
+    payload: Area
+}
+
+export function areaToggle(area: string): AreaToggle {
     return {
         type: AREA_TOGGLE,
         payload: area
     }
 }
 
-export function areaOn(area: string): AreaAction {
+export function areaUpdate(area: Area): AreaUpdate {
     return {
-        type: AREA_ON,
+        type: AREA_UPDATE,
         payload: area
     }
 }
 
-export function areaOff(area: string): AreaAction {
-    return {
-        type: AREA_OFF,
-        payload: area
-    }
-}
 
 /*
     Map Actions
