@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# OnTrack Technical Test
+
+## Overview
+
+This is a paginated library query application.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
